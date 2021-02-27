@@ -18,8 +18,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.txor.beerapi.TestMother.BEER1_NAME;
 import static org.txor.beerapi.TestMother.BEER2_NAME;
-import static org.txor.beerapi.TestMother.beerDto1;
-import static org.txor.beerapi.TestMother.beerDto2;
+import static org.txor.beerapi.TestMother.beer1Dto;
+import static org.txor.beerapi.TestMother.beer2Dto;
 import static org.txor.beerapi.TestMother.someBeers;
 
 @WebMvcTest(BeersController.class)
@@ -37,7 +37,7 @@ class BeersControllerTest {
     @Test
     public void getAllBeers_should_rely_on_service_and_converters_to_return_all_the_beers() throws Exception {
         when(beerService.getAllBeers()).thenReturn(someBeers());
-        when(beerConverter.convert(any(Beer.class))).thenReturn(beerDto1()).thenReturn(beerDto2());
+        when(beerConverter.convert(any(Beer.class))).thenReturn(beer1Dto()).thenReturn(beer2Dto());
 
         this.mockMvc.perform(get("/api/beers"))
                 .andExpect(status().isOk())

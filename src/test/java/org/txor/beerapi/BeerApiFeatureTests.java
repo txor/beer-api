@@ -36,7 +36,7 @@ import static org.txor.beerapi.TestMother.someBeers;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
-class BeerApiTests {
+class BeerApiFeatureTests {
 
     @Autowired
     private WebApplicationContext context;

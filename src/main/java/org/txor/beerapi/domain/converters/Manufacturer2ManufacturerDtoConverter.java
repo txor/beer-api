@@ -6,6 +6,6 @@ import org.txor.beerapi.domain.model.Manufacturer;
 public class Manufacturer2ManufacturerDtoConverter {
 
     public ManufacturerDTO convert(Manufacturer manufacturer) {
-        return new ManufacturerDTO("", "");
+        return new ManufacturerDTO(manufacturer.getName(), manufacturer.getNationality());
     }
 }

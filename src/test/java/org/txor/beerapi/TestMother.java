@@ -3,6 +3,7 @@ package org.txor.beerapi;
 import org.txor.beerapi.domain.dto.BeerDTO;
 import org.txor.beerapi.domain.dto.ManufacturerDTO;
 import org.txor.beerapi.domain.model.Beer;
+import org.txor.beerapi.domain.model.Manufacturer;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,27 +23,42 @@ public class TestMother {
     public static final String MANUFACTURER1_NAME = "Grupo Modelo, AB InBev";
     public static final String MANUFACTURER1_NATIONALITY = "Mexican";
 
+    public static final String MANUFACTURER2_NAME = "Spaten-Franziskaner-Bräu GmbH";
+    public static final String MANUFACTURER2_NATIONALITY = "German";
+
     public static List<Beer> someBeers() {
         return Arrays.asList(beer1(), beer2());
     }
 
     public static Beer beer1() {
-        return new Beer(BEER1_NAME, BEER1_GRADUATION, BEER1_TYPE, BEER1_DESCRIPTION, null);
+        return new Beer(BEER1_NAME, BEER1_GRADUATION, BEER1_TYPE, BEER1_DESCRIPTION, manufacturer1());
     }
 
-    public static BeerDTO beerDto1() {
-        return new BeerDTO(BEER1_NAME, BEER1_GRADUATION, BEER1_TYPE, BEER1_DESCRIPTION, null);
+    public static BeerDTO beer1Dto() {
+        return new BeerDTO(BEER1_NAME, BEER1_GRADUATION, BEER1_TYPE, BEER1_DESCRIPTION, manufacturer1Dto());
     }
 
     public static Beer beer2() {
-        return new Beer(BEER2_NAME, BEER2_GRADUATION, BEER2_TYPE, BEER2_DESCRIPTION, null);
+        return new Beer(BEER2_NAME, BEER2_GRADUATION, BEER2_TYPE, BEER2_DESCRIPTION, manufacturer2());
     }
 
-    public static BeerDTO beerDto2() {
-        return new BeerDTO(BEER2_NAME, BEER2_GRADUATION, BEER2_TYPE, BEER2_DESCRIPTION, null);
+    public static BeerDTO beer2Dto() {
+        return new BeerDTO(BEER2_NAME, BEER2_GRADUATION, BEER2_TYPE, BEER2_DESCRIPTION, manufacturer2Dto());
     }
 
-    public static ManufacturerDTO manufacturer1() {
+    public static Manufacturer manufacturer1() {
+        return new Manufacturer(MANUFACTURER1_NAME, MANUFACTURER1_NATIONALITY);
+    }
+
+    public static ManufacturerDTO manufacturer1Dto() {
         return new ManufacturerDTO(MANUFACTURER1_NAME, MANUFACTURER1_NATIONALITY);
+    }
+
+    public static Manufacturer manufacturer2() {
+        return new Manufacturer(MANUFACTURER2_NAME, MANUFACTURER2_NATIONALITY);
+    }
+
+    public static ManufacturerDTO manufacturer2Dto() {
+        return new ManufacturerDTO(MANUFACTURER2_NAME, MANUFACTURER2_NATIONALITY);
     }
 }

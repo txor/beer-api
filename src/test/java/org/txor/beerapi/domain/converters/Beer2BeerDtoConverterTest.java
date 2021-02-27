@@ -16,7 +16,7 @@ import static org.txor.beerapi.TestMother.BEER1_TYPE;
 import static org.txor.beerapi.TestMother.MANUFACTURER1_NAME;
 import static org.txor.beerapi.TestMother.MANUFACTURER1_NATIONALITY;
 import static org.txor.beerapi.TestMother.beer1;
-import static org.txor.beerapi.TestMother.manufacturer1;
+import static org.txor.beerapi.TestMother.manufacturer1Dto;
 
 @ExtendWith(MockitoExtension.class)
 class Beer2BeerDtoConverterTest {
@@ -26,7 +26,7 @@ class Beer2BeerDtoConverterTest {
 
     @Test
     public void convert_should_correctly_convert_a_beer() {
-        when(manufacturerConverter.convert(any())).thenReturn(manufacturer1());
+        when(manufacturerConverter.convert(any())).thenReturn(manufacturer1Dto());
         Beer2BeerDtoConverter beer2BeerDtoConverter = new Beer2BeerDtoConverter(manufacturerConverter);
 
         BeerDTO convertedBeer = beer2BeerDtoConverter.convert(beer1());
