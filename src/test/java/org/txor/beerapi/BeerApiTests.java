@@ -16,13 +16,22 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.txor.beerapi.domain.BeerService;
-import org.txor.beerapi.domain.converters.BeerConverter;
+import org.txor.beerapi.domain.converters.Beer2BeerDtoConverter;
+import org.txor.beerapi.domain.converters.Manufacturer2ManufacturerDtoConverter;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.txor.beerapi.TestMother.BEER1_DESCRIPTION;
+import static org.txor.beerapi.TestMother.BEER1_GRADUATION;
+import static org.txor.beerapi.TestMother.BEER1_NAME;
+import static org.txor.beerapi.TestMother.BEER1_TYPE;
+import static org.txor.beerapi.TestMother.BEER2_DESCRIPTION;
+import static org.txor.beerapi.TestMother.BEER2_GRADUATION;
+import static org.txor.beerapi.TestMother.BEER2_NAME;
+import static org.txor.beerapi.TestMother.BEER2_TYPE;
 import static org.txor.beerapi.TestMother.someBeers;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -39,9 +48,15 @@ class BeerApiTests {
 
     @TestConfiguration
     static class TestConfig {
+
         @Bean
-        public BeerConverter beerConverter() {
-            return new BeerConverter();
+        public Manufacturer2ManufacturerDtoConverter manufacturerConverter() {
+            return new Manufacturer2ManufacturerDtoConverter();
+        }
+
+        @Bean
+        public Beer2BeerDtoConverter beerConverter(Manufacturer2ManufacturerDtoConverter manufacturerConverter) {
+            return new Beer2BeerDtoConverter(manufacturerConverter);
         }
     }
 
@@ -57,13 +72,20 @@ class BeerApiTests {
 
         this.mockMvc.perform(get("/api/beers"))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[*].name").isNotEmpty())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[*].graduation").isNotEmpty())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[*].type").isNotEmpty())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[*].description").isNotEmpty())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[*].manufacturer").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[*].manufacturer.name").isNotEmpty())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[*].manufacturer.nationality").isNotEmpty())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value(BEER1_NAME))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].graduation").value(BEER1_GRADUATION))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].type").value(BEER1_TYPE))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].description").value(BEER1_DESCRIPTION))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].manufacturer").exists())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].manufacturer.name").isNotEmpty())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].manufacturer.nationality").isNotEmpty())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].name").value(BEER2_NAME))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].graduation").value(BEER2_GRADUATION))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].type").value(BEER2_TYPE))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].description").value(BEER2_DESCRIPTION))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].manufacturer").exists())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].manufacturer.name").isNotEmpty())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].manufacturer.nationality").isNotEmpty())
                 .andDo(document("beer-list"));
     }
 }
