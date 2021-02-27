@@ -46,20 +46,6 @@ class BeerApiFeatureTests {
 
     private MockMvc mockMvc;
 
-    @TestConfiguration
-    static class TestConfig {
-
-        @Bean
-        public Manufacturer2ManufacturerDtoConverter manufacturerConverter() {
-            return new Manufacturer2ManufacturerDtoConverter();
-        }
-
-        @Bean
-        public Beer2BeerDtoConverter beerConverter(Manufacturer2ManufacturerDtoConverter manufacturerConverter) {
-            return new Beer2BeerDtoConverter(manufacturerConverter);
-        }
-    }
-
     @BeforeEach
     public void setUp(RestDocumentationContextProvider restDocumentation) {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context)
