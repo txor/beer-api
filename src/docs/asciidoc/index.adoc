@@ -1,0 +1,12 @@
+= API to browse and manage a beer catalogue
+Txor;
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+
+Manage a beer catalogue from different manufacturers (providers). Beer consumers
+can look up the beer catalogue in order to inspire future purchases.
+
+Obtain all beers list with the following HTTP request:
+
+include::{snippets}/beer-list/http-request.adoc[]

@@ -53,3 +53,11 @@ mvn clean install
 Then run the container exposing port 8080
 ```
 docker run -it -p 8080:8080 beer-api:0.0.1-SNAPSHOT
+```
+
+## API documentation
+Build the API documentation with
+```
+mvn clean package
+```
+Then it will be available at project root folder on _target/generated-docs/index.html_
