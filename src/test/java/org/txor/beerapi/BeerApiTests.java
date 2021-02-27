@@ -9,6 +9,7 @@ import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -36,6 +37,13 @@ class BeerApiTests {
     void list_all_beers() throws Exception {
         this.mockMvc.perform(get("/api/beers"))
                 .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[*].name").isNotEmpty())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[*].graduation").isNotEmpty())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[*].type").isNotEmpty())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[*].description").isNotEmpty())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[*].manufacturer").exists())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[*].manufacturer.name").isNotEmpty())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[*].manufacturer.nationality").isNotEmpty())
                 .andDo(document("beer-list"));
     }
 }
