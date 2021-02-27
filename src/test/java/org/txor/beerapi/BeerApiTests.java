@@ -5,7 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -14,6 +16,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.txor.beerapi.domain.BeerService;
+import org.txor.beerapi.domain.converters.BeerConverter;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -33,6 +36,14 @@ class BeerApiTests {
     private BeerService service;
 
     private MockMvc mockMvc;
+
+    @TestConfiguration
+    static class TestConfig {
+        @Bean
+        public BeerConverter beerConverter() {
+            return new BeerConverter();
+        }
+    }
 
     @BeforeEach
     public void setUp(RestDocumentationContextProvider restDocumentation) {

@@ -11,6 +11,7 @@ import org.txor.beerapi.domain.converters.BeerConverter;
 import org.txor.beerapi.domain.model.Beer;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -43,7 +44,6 @@ class BeersControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value(beer1Name()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].name").value(beer2Name()));
         verify(beerService).getAllBeers();
-        verify(beerConverter).convert(any());
-        verify(beerConverter).convert(any());
+        verify(beerConverter, times(2)).convert(any());
     }
 }
