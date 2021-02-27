@@ -1,12 +1,29 @@
-= API to browse and manage a beer catalogue
+= RESTful beer catalogue API Guide
 Txor;
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
 
-Manage a beer catalogue from different manufacturers (providers). Beer consumers
-can look up the beer catalogue in order to inspire future purchases.
+Manage a beer catalogue from different manufacturers (providers).
+Beer consumers can look up the beer catalogue in order to inspire future purchases.
 
-Obtain all beers list with the following HTTP request:
+[[resources]]
+= Resources
 
-include::{snippets}/beer-list/http-request.adoc[]
+[[resources_beers]]
+== Beer list
+
+The beer list provides information about all existing beers and its manufacturers.
+
+[[resources_beers_access]]
+=== Accessing the beer list
+
+A `GET` request is used to access the index
+
+operation::beer-list-example[snippets='http-request,curl-request,http-response']
+
+[[resources_beer]]
+== Beer
