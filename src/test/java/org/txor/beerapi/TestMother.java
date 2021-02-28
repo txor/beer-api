@@ -1,7 +1,7 @@
 package org.txor.beerapi;
 
-import org.txor.beerapi.domain.dto.BeerDTO;
-import org.txor.beerapi.domain.dto.ManufacturerDTO;
+import org.txor.beerapi.api.dto.BeerDTO;
+import org.txor.beerapi.api.dto.ManufacturerDTO;
 import org.txor.beerapi.domain.model.Beer;
 import org.txor.beerapi.domain.model.Manufacturer;
 

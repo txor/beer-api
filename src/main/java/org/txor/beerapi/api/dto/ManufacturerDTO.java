@@ -1,4 +1,4 @@
-package org.txor.beerapi.domain.dto;
+package org.txor.beerapi.api.dto;
 
 import javax.validation.constraints.NotBlank;
 

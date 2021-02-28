@@ -1,6 +1,5 @@
 package org.txor.beerapi.api;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -10,9 +9,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.txor.beerapi.api.converters.ManufacturerConverter;
+import org.txor.beerapi.api.dto.ManufacturerDTO;
 import org.txor.beerapi.domain.ManufacturerService;
-import org.txor.beerapi.domain.converters.Manufacturer2ManufacturerDtoConverter;
-import org.txor.beerapi.domain.dto.ManufacturerDTO;
 import org.txor.beerapi.domain.model.Manufacturer;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,9 +19,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -43,7 +39,7 @@ class ManufacturerControllerTest {
     private ManufacturerService manufacturerService;
 
     @MockBean
-    private Manufacturer2ManufacturerDtoConverter manufacturerConverter;
+    private ManufacturerConverter manufacturerConverter;
 
     @Captor
     ArgumentCaptor<Manufacturer> manufacturerCaptor;

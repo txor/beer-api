@@ -1,13 +1,13 @@
-package org.txor.beerapi.domain.converters;
+package org.txor.beerapi.api.converters;
 
-import org.txor.beerapi.domain.dto.BeerDTO;
+import org.txor.beerapi.api.dto.BeerDTO;
 import org.txor.beerapi.domain.model.Beer;
 
-public class Beer2BeerDtoConverter {
+public class BeerConverter {
 
-    private final Manufacturer2ManufacturerDtoConverter manufacturerConverter;
+    private final ManufacturerConverter manufacturerConverter;
 
-    public Beer2BeerDtoConverter(Manufacturer2ManufacturerDtoConverter manufacturerConverter) {
+    public BeerConverter(ManufacturerConverter manufacturerConverter) {
         this.manufacturerConverter = manufacturerConverter;
     }
 

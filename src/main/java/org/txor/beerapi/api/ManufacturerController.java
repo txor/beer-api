@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.txor.beerapi.domain.ManufacturerService;
-import org.txor.beerapi.domain.converters.Manufacturer2ManufacturerDtoConverter;
-import org.txor.beerapi.domain.dto.ManufacturerDTO;
+import org.txor.beerapi.api.converters.ManufacturerConverter;
+import org.txor.beerapi.api.dto.ManufacturerDTO;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -23,7 +23,7 @@ public class ManufacturerController {
     ManufacturerService manufacturerService;
 
     @Autowired
-    Manufacturer2ManufacturerDtoConverter manufacturerConverter;
+    ManufacturerConverter manufacturerConverter;
 
     @RequestMapping("/api/manufacturers")
     public List<String> getAllManufacturerNames() {

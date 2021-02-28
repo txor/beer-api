@@ -4,8 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.txor.beerapi.domain.BeerService;
 import org.txor.beerapi.domain.ManufacturerService;
-import org.txor.beerapi.domain.converters.Beer2BeerDtoConverter;
-import org.txor.beerapi.domain.converters.Manufacturer2ManufacturerDtoConverter;
+import org.txor.beerapi.api.converters.BeerConverter;
+import org.txor.beerapi.api.converters.ManufacturerConverter;
 
 @Configuration
 public class BeerApiConfiguration {
@@ -21,12 +21,12 @@ public class BeerApiConfiguration {
     }
 
     @Bean
-    public Beer2BeerDtoConverter beerConverter(Manufacturer2ManufacturerDtoConverter manufacturerConverter) {
-        return new Beer2BeerDtoConverter(manufacturerConverter);
+    public BeerConverter beerConverter(ManufacturerConverter manufacturerConverter) {
+        return new BeerConverter(manufacturerConverter);
     }
 
     @Bean
-    public Manufacturer2ManufacturerDtoConverter manufacturerConverter() {
-        return new Manufacturer2ManufacturerDtoConverter();
+    public ManufacturerConverter manufacturerConverter() {
+        return new ManufacturerConverter();
     }
 }
