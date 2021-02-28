@@ -27,3 +27,10 @@ operation::beer-list-example[snippets='http-request,curl-request,http-response']
 
 [[resources_beer]]
 == Beer
+
+[[resources_beer_retrieve]]
+=== Retrieve a beer
+
+A `GET` request will retrieve the details of a beer
+
+operation::beer-get-example[snippets='http-request,curl-request,http-response,response-fields']

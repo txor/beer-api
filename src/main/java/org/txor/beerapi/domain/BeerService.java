@@ -10,4 +10,8 @@ public class BeerService {
     public List<Beer> getAllBeers() {
         return new ArrayList<>();
     }
+
+    public Beer getBeer(String name) {
+        return null;
+    }
 }

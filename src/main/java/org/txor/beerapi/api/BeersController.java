@@ -1,6 +1,7 @@
 package org.txor.beerapi.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.txor.beerapi.domain.BeerService;
@@ -22,5 +23,10 @@ public class BeersController {
     @RequestMapping("/api/beers")
     public List<BeerDTO> getAllBeers() {
         return beerService.getAllBeers().stream().map(beer2BeerDtoConverter::convert).collect(Collectors.toList());
+    }
+
+    @RequestMapping("/api/beer/{name}")
+    public BeerDTO getBeer(@PathVariable String name) {
+        return new BeerDTO("", 0, "","", null);
     }
 }
