@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -23,8 +24,11 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseBody;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.txor.beerapi.TestMother.BEER1_DESCRIPTION;
 import static org.txor.beerapi.TestMother.BEER1_GRADUATION;
@@ -142,5 +146,18 @@ class BeerApiFeatureTests {
         this.mockMvc.perform(get("/api/manufacturer/{name}/", unexistingManufacturer))
                 .andExpect(status().isNotFound())
                 .andExpect(result -> assertEquals(unexistingManufacturer + " not found", result.getResponse().getContentAsString()));
+    }
+
+    @Test
+    public void create_manufacturer() throws Exception {
+        this.mockMvc.perform(post("/api/manufacturer")
+                .content("{\"name\": \"" + MANUFACTURER1_NAME + "\", \"nationality\":\"" + MANUFACTURER1_NATIONALITY + "\"}")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andDo(document("manufacturer-create-example",
+                        requestFields(
+                                fieldWithPath("name").description("The name of the manufacturer"),
+                                fieldWithPath("nationality").description("The nationality of the manufacturer"))));
     }
 }

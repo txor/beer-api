@@ -1,7 +1,10 @@
 package org.txor.beerapi.domain.dto;
 
+import javax.validation.constraints.NotBlank;
+
 public class ManufacturerDTO {
 
+    @NotBlank()
     private final String name;
     private final String nationality;
 

@@ -1,5 +1,6 @@
 package org.txor.beerapi.domain;
 
+import org.txor.beerapi.domain.dto.ManufacturerDTO;
 import org.txor.beerapi.domain.model.Manufacturer;
 
 import java.util.ArrayList;
@@ -13,5 +14,8 @@ public class ManufacturerService {
 
     public Manufacturer getManufacturer(String name) {
         return null;
+    }
+
+    public void createManufacturer(ManufacturerDTO manufacturerDto) {
     }
 }

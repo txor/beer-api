@@ -20,6 +20,8 @@ The following HTTP verbs are used in Beer API.
 | Verb | Usage
 | `GET`
 | Used to retrieve a resource
+| `POST`
+| Used to create a new resource
 |===
 
 [[overview_http_status_codes]]
@@ -30,9 +32,9 @@ The following HTTP status codes are used in Beer API.
 |===
 | Status code | Usage
 | `200 OK`
-| The request completed successfully
-| `404 Not Found`
-| The requested resource did not exist
+| The request completed successfully.
+| `400 Bad Request`
+| The request was malformed.
 |===
 
 [[resources]]
@@ -74,6 +76,13 @@ operation::manufacturer-list-example[snippets='http-request,curl-request,http-re
 
 [[resources_manufacturer]]
 == Manufacturer
+
+[[resources_manufacturer_retrieve]]
+=== Create a manufacturer
+
+A `POST` request is used to create a manufacturer
+
+operation::manufacturer-create-example[snippets='http-request,request-body,curl-request,http-response']
 
 [[resources_manufacturer_retrieve]]
 === Retrieve a manufacturer
