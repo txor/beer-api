@@ -97,3 +97,10 @@ operation::manufacturer-get-example[snippets='http-request,curl-request,http-res
 A `PUT` request is used to update manufacturer information.
 
 operation::manufacturer-update-example[snippets='http-request,curl-request,http-response']
+
+[[resources_manufacturer_delete]]
+=== Delete manufacturer
+
+A `DELETE` request is used to delete a manufacturer.
+
+operation::manufacturer-delete-example[snippets='http-request,curl-request,http-response']

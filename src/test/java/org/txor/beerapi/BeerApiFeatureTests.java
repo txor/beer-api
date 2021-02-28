@@ -29,6 +29,7 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseBody;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -183,6 +184,23 @@ class BeerApiFeatureTests {
         this.mockMvc.perform(put("/api/manufacturer/{name}/", unexistingManufacturer)
                 .content("{\"name\": \"" + MANUFACTURER1_NAME + "\", \"nationality\":\"" + MANUFACTURER1_NATIONALITY + "\"}")
                 .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(result -> assertEquals(unexistingManufacturer + " not found", result.getResponse().getContentAsString()));
+    }
+
+    @Test
+    public void delete_manufacturer() throws Exception {
+        this.mockMvc.perform(delete("/api/manufacturer/{name}", MANUFACTURER1_NAME))
+                .andExpect(status().isOk())
+                .andDo(document("manufacturer-delete-example"));
+    }
+
+    @Test
+    public void delete_unexisting_manufacturer_information() throws Exception {
+        String unexistingManufacturer = "unexisting manufacturer";
+        doThrow(new ManufacturerNotFoundException(unexistingManufacturer)).when(manufacturerService).deleteManufacturer(anyString());
+
+        this.mockMvc.perform(delete("/api/manufacturer/{name}", MANUFACTURER1_NAME))
                 .andExpect(status().isNotFound())
                 .andExpect(result -> assertEquals(unexistingManufacturer + " not found", result.getResponse().getContentAsString()));
     }

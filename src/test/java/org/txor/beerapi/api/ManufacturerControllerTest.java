@@ -19,6 +19,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -63,7 +64,7 @@ class ManufacturerControllerTest {
     }
 
     @Test
-    public void getManufacturer_should_rely_on_service_and_converters_to_return_the_matching_anufacturer() throws Exception {
+    public void getManufacturer_should_rely_on_service_and_converters_to_return_the_matching_manufacturer() throws Exception {
         when(manufacturerService.getManufacturer(anyString())).thenReturn(manufacturer1());
         when(manufacturerConverter.convert(any(Manufacturer.class))).thenReturn(manufacturer1Dto());
 
@@ -97,7 +98,7 @@ class ManufacturerControllerTest {
     }
 
     @Test
-    public void updateManufacturer_should_rely_on_service_to_create_the_given_manufacturer() throws Exception {
+    public void updateManufacturer_should_rely_on_service_to_update_the_given_manufacturer() throws Exception {
         when(manufacturerConverter.convert(any(ManufacturerDTO.class))).thenReturn(manufacturer1());
 
         this.mockMvc.perform(put("/api/manufacturer/{name}", "some manufacturer")
@@ -119,5 +120,12 @@ class ManufacturerControllerTest {
                 .content("{\"bad\": \"manufacturer data\"}")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void deleteManufacturer_should_rely_on_service_to_delete_the_given_manufacturer() throws Exception {
+        this.mockMvc.perform(delete("/api/manufacturer/{name}", MANUFACTURER1_NAME))
+                .andExpect(status().isOk());
+        verify(manufacturerService).deleteManufacturer(MANUFACTURER1_NAME);
     }
 }

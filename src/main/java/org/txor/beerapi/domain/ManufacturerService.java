@@ -20,4 +20,7 @@ public class ManufacturerService {
 
     public void updateManufacturer(String manufacturer, Manufacturer manufacturerInformation) {
     }
+
+    public void deleteManufacturer(String manufacturer) {
+    }
 }

@@ -3,6 +3,7 @@ package org.txor.beerapi.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -46,5 +47,10 @@ public class ManufacturerController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateManufacturer(@PathVariable String name, @Valid @RequestBody ManufacturerDTO manufacturer) {
         manufacturerService.updateManufacturer(name, manufacturerConverter.convert(manufacturer));
+    }
+
+    @DeleteMapping(value = "/api/manufacturer/{name}")
+    public void deleteManufacturer(@PathVariable String name) {
+        manufacturerService.deleteManufacturer(name);
     }
 }
