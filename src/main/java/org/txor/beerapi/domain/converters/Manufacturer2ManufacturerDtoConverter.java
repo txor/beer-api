@@ -8,4 +8,8 @@ public class Manufacturer2ManufacturerDtoConverter {
     public ManufacturerDTO convert(Manufacturer manufacturer) {
         return new ManufacturerDTO(manufacturer.getName(), manufacturer.getNationality());
     }
+
+    public Manufacturer convert(ManufacturerDTO manufacturer) {
+        return null;
+    }
 }

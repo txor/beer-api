@@ -38,6 +38,6 @@ public class ManufacturerController {
     @PostMapping(value = "/api/manufacturer")
     @ResponseStatus(HttpStatus.CREATED)
     public void createManufacturer(@Valid @RequestBody ManufacturerDTO manufacturer) {
-        manufacturerService.createManufacturer(manufacturer);
+        manufacturerService.createManufacturer(null);
     }
 }

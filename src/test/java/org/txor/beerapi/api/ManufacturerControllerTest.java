@@ -46,7 +46,7 @@ class ManufacturerControllerTest {
     private Manufacturer2ManufacturerDtoConverter manufacturerConverter;
 
     @Captor
-    ArgumentCaptor<ManufacturerDTO> manufacturerDtoCaptor;
+    ArgumentCaptor<Manufacturer> manufacturerCaptor;
 
     @Test
     public void getAllManufacturerNames_should_rely_on_service_to_return_all_the_manufacturer_names() throws Exception {
@@ -74,13 +74,15 @@ class ManufacturerControllerTest {
 
     @Test
     public void createManufacturer_should_rely_on_service_to_create_the_given_manufacturer() throws Exception {
+        when(manufacturerConverter.convert(any(ManufacturerDTO.class))).thenReturn(manufacturer1());
+
         this.mockMvc.perform(post("/api/manufacturer")
                 .content("{\"name\": \"" + MANUFACTURER1_NAME + "\", \"nationality\":\"" + MANUFACTURER1_NATIONALITY + "\"}")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated());
-        verify(manufacturerService).createManufacturer(manufacturerDtoCaptor.capture());
-        assertThat(manufacturerDtoCaptor.getValue().getName()).isEqualTo(MANUFACTURER1_NAME);
-        assertThat(manufacturerDtoCaptor.getValue().getNationality()).isEqualTo(MANUFACTURER1_NATIONALITY);
+        verify(manufacturerService).createManufacturer(manufacturerCaptor.capture());
+        assertThat(manufacturerCaptor.getValue().getName()).isEqualTo(MANUFACTURER1_NAME);
+        assertThat(manufacturerCaptor.getValue().getNationality()).isEqualTo(MANUFACTURER1_NATIONALITY);
     }
 
     @Test

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.txor.beerapi.domain.dto.BeerDTO;
+import org.txor.beerapi.domain.model.Manufacturer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -26,7 +27,7 @@ class Beer2BeerDtoConverterTest {
 
     @Test
     public void convert_should_correctly_convert_a_beer() {
-        when(manufacturerConverter.convert(any())).thenReturn(manufacturer1Dto());
+        when(manufacturerConverter.convert(any(Manufacturer.class))).thenReturn(manufacturer1Dto());
         Beer2BeerDtoConverter beer2BeerDtoConverter = new Beer2BeerDtoConverter(manufacturerConverter);
 
         BeerDTO convertedBeer = beer2BeerDtoConverter.convert(beer1());
