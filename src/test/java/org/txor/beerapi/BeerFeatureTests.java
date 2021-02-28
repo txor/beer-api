@@ -136,4 +136,12 @@ class BeerFeatureTests {
 
         verify(beerService).updateBeer(anyString(), any(Beer.class));
     }
+
+    @Test
+    public void not_update_beer_information_with_bad_data() throws Exception {
+        this.mockMvc.perform(put("/api/beer/{name}", "some beer")
+                .content("{\"bad\": \"beer data\"}")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
 }

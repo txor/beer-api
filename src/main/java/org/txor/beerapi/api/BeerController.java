@@ -43,7 +43,7 @@ public class BeerController {
 
     @PutMapping("/api/beer/{name}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateBeer(@PathVariable String name, @RequestBody BeerDTO beer) {
+    public void updateBeer(@PathVariable String name, @Valid @RequestBody BeerDTO beer) {
         beerService.updateBeer(name, beerConverter.convert(beer));
     }
 }
