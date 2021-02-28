@@ -87,6 +87,6 @@ class BeerApiFeatureTests {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.manufacturer").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.manufacturer.name").isNotEmpty())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.manufacturer.nationality").isNotEmpty())
-                .andDo(document("beer-example", responseBody()));
+                .andDo(document("beer-get-example", responseBody()));
     }
 }

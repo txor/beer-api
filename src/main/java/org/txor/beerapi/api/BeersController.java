@@ -27,6 +27,6 @@ public class BeersController {
 
     @RequestMapping("/api/beer/{name}")
     public BeerDTO getBeer(@PathVariable String name) {
-        return new BeerDTO("", 0, "","", null);
+        return beer2BeerDtoConverter.convert(beerService.getBeer(name));
     }
 }

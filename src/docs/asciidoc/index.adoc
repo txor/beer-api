@@ -33,4 +33,4 @@ operation::beer-list-example[snippets='http-request,curl-request,http-response']
 
 A `GET` request will retrieve the details of a beer
 
-operation::beer-get-example[snippets='http-request,curl-request,http-response,response-fields']
+operation::beer-get-example[snippets='http-request,curl-request,http-response']
