@@ -7,8 +7,33 @@ Txor;
 :toclevels: 4
 :sectlinks:
 
-Manage a beer catalogue from different manufacturers (providers).
+[[overview]]
+= Overview
+
+This API allows to manage a beer catalogue from different manufacturers.
 Beer consumers can look up the beer catalogue in order to inspire future purchases.
+
+[[overview_http_verbs]]
+== HTTP verbs
+The following HTTP verbs are used in Beer API.
+|===
+| Verb | Usage
+| `GET`
+| Used to retrieve a resource
+|===
+
+[[overview_http_status_codes]]
+== HTTP status codes
+
+The following HTTP status codes are used in Beer API.
+
+|===
+| Status code | Usage
+| `200 OK`
+| The request completed successfully
+| `404 Not Found`
+| The requested resource did not exist
+|===
 
 [[resources]]
 = Resources

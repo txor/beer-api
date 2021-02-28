@@ -14,7 +14,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.txor.beerapi.domain.BeerService;
+import org.txor.beerapi.domain.exceptions.BeerNotFoundException;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -88,5 +90,15 @@ class BeerApiFeatureTests {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.manufacturer.name").isNotEmpty())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.manufacturer.nationality").isNotEmpty())
                 .andDo(document("beer-get-example", responseBody()));
+    }
+
+    @Test
+    public void obtain_unexisting_beer_information() throws Exception {
+        String unexistingBeer = "unexisting beer";
+        when(service.getBeer(unexistingBeer)).thenThrow(new BeerNotFoundException(unexistingBeer));
+
+        this.mockMvc.perform(get("/api/beer/{name}/", unexistingBeer))
+                .andExpect(status().isNotFound())
+                .andExpect(result -> assertEquals(unexistingBeer + " not found", result.getResponse().getContentAsString()));
     }
 }
