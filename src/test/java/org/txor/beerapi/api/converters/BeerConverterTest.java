@@ -1,34 +1,21 @@
 package org.txor.beerapi.api.converters;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.txor.beerapi.api.dto.BeerDTO;
-import org.txor.beerapi.domain.model.Manufacturer;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 import static org.txor.beerapi.TestMother.BEER1_DESCRIPTION;
 import static org.txor.beerapi.TestMother.BEER1_GRADUATION;
 import static org.txor.beerapi.TestMother.BEER1_NAME;
 import static org.txor.beerapi.TestMother.BEER1_TYPE;
 import static org.txor.beerapi.TestMother.MANUFACTURER1_NAME;
-import static org.txor.beerapi.TestMother.MANUFACTURER1_NATIONALITY;
 import static org.txor.beerapi.TestMother.beer1;
-import static org.txor.beerapi.TestMother.manufacturer1Dto;
 
-@ExtendWith(MockitoExtension.class)
 class BeerConverterTest {
-
-    @Mock
-    private ManufacturerConverter manufacturerConverter;
 
     @Test
     public void convert_should_correctly_convert_a_beer() {
-        when(manufacturerConverter.convert(any(Manufacturer.class))).thenReturn(manufacturer1Dto());
-        BeerConverter beerConverter = new BeerConverter(manufacturerConverter);
+        BeerConverter beerConverter = new BeerConverter();
 
         BeerDTO convertedBeer = beerConverter.convert(beer1());
 
@@ -36,7 +23,6 @@ class BeerConverterTest {
         assertThat(convertedBeer.getGraduation()).isEqualTo(BEER1_GRADUATION);
         assertThat(convertedBeer.getType()).isEqualTo(BEER1_TYPE);
         assertThat(convertedBeer.getDescription()).isEqualTo(BEER1_DESCRIPTION);
-        assertThat(convertedBeer.getManufacturer().getName()).isEqualTo(MANUFACTURER1_NAME);
-        assertThat(convertedBeer.getManufacturer().getNationality()).isEqualTo(MANUFACTURER1_NATIONALITY);
+        assertThat(convertedBeer.getManufacturer()).isEqualTo(MANUFACTURER1_NAME);
     }
 }

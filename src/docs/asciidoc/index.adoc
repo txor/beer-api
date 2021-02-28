@@ -15,13 +15,18 @@ Beer consumers can look up the beer catalogue in order to inspire future purchas
 
 [[overview_http_verbs]]
 == HTTP verbs
+
 The following HTTP verbs are used in Beer API.
+
 |===
-| Verb | Usage
 | `GET`
 | Used to retrieve a resource
 | `POST`
 | Used to create a new resource
+| `PATCH`
+| Used to update an existing resource, including partial updates
+| `DELETE`
+| Used to delete an existing resource
 |===
 
 [[overview_http_status_codes]]
@@ -30,30 +35,32 @@ The following HTTP verbs are used in Beer API.
 The following HTTP status codes are used in Beer API.
 
 |===
-| Status code | Usage
 | `200 OK`
-| The request completed successfully.
+| The request completed successfully
+| `201 Created`
+| A new resource has been created successfully.
+The resource's URI is available from the response's `Location` header
+| `204 No Content`
+| An update to an existing resource has been applied successfully
 | `400 Bad Request`
 | The request was malformed.
+The response body will include an error providing further information
+| `404 Not Found`
+| The requested resource did not exist
 |===
 
 [[resources]]
 = Resources
 
-[[resources_beers]]
-== Beer list
-
-The beer list provides information about all existing beers and its manufacturers.
-
-[[resources_beers_access]]
-=== Accessing the beer list
-
-A `GET` request is used to access the index
-
-operation::beer-list-example[snippets='http-request,http-response']
-
 [[resources_beer]]
 == Beer
+
+[[resources_beer_name_list]]
+=== Accessing the beer name list
+
+A `GET` request is used to access the beer name list
+
+operation::beer-list-example[snippets='http-request,http-response']
 
 [[resources_beer_retrieve]]
 === Retrieve a beer
@@ -65,7 +72,7 @@ operation::beer-get-example[snippets='http-request,http-response']
 [[resources_manufacturer]]
 == Manufacturer
 
-[[resources_manufacturer_mane_list]]
+[[resources_manufacturer_name_list]]
 === Retrieve a manufacturer name list
 
 A `GET` request is used to access the manufacturer name list

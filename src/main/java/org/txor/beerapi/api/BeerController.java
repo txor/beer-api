@@ -4,12 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.txor.beerapi.domain.BeerService;
 import org.txor.beerapi.api.converters.BeerConverter;
 import org.txor.beerapi.api.dto.BeerDTO;
+import org.txor.beerapi.domain.BeerService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 public class BeerController {
@@ -21,8 +20,8 @@ public class BeerController {
     BeerConverter beerConverter;
 
     @RequestMapping("/api/beers")
-    public List<BeerDTO> getAllBeers() {
-        return beerService.getAllBeers().stream().map(beerConverter::convert).collect(Collectors.toList());
+    public List<String> getAllBeers() {
+        return beerService.getAllBeerNames();
     }
 
     @RequestMapping("/api/beer/{name}")

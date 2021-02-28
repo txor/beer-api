@@ -7,7 +7,7 @@ import java.util.List;
 
 public class BeerService {
 
-    public List<Beer> getAllBeers() {
+    public List<String> getAllBeerNames() {
         return new ArrayList<>();
     }
 

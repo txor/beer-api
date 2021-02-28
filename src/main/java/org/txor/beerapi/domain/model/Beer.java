@@ -6,9 +6,9 @@ public class Beer {
     private final float graduation;
     private final String type;
     private final String description;
-    private final Manufacturer manufacturer;
+    private final String manufacturer;
 
-    public Beer(String name, float graduation, String type, String description, Manufacturer manufacturer) {
+    public Beer(String name, float graduation, String type, String description, String manufacturer) {
         this.name = name;
         this.graduation = graduation;
         this.type = type;
@@ -32,7 +32,7 @@ public class Beer {
         return description;
     }
 
-    public Manufacturer getManufacturer() {
+    public String getManufacturer() {
         return manufacturer;
     }
 }

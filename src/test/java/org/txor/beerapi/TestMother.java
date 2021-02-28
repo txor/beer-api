@@ -26,24 +26,24 @@ public class TestMother {
     public static final String MANUFACTURER2_NAME = "Spaten-Franziskaner-Bräu GmbH";
     public static final String MANUFACTURER2_NATIONALITY = "German";
 
-    public static List<Beer> someBeers() {
-        return Arrays.asList(beer1(), beer2());
+    public static List<String> allBeerNames() {
+        return Arrays.asList(BEER1_NAME, BEER2_NAME);
     }
 
     public static Beer beer1() {
-        return new Beer(BEER1_NAME, BEER1_GRADUATION, BEER1_TYPE, BEER1_DESCRIPTION, manufacturer1());
+        return new Beer(BEER1_NAME, BEER1_GRADUATION, BEER1_TYPE, BEER1_DESCRIPTION, MANUFACTURER1_NAME);
     }
 
     public static BeerDTO beer1Dto() {
-        return new BeerDTO(BEER1_NAME, BEER1_GRADUATION, BEER1_TYPE, BEER1_DESCRIPTION, manufacturer1Dto());
+        return new BeerDTO(BEER1_NAME, BEER1_GRADUATION, BEER1_TYPE, BEER1_DESCRIPTION, MANUFACTURER1_NAME);
     }
 
     public static Beer beer2() {
-        return new Beer(BEER2_NAME, BEER2_GRADUATION, BEER2_TYPE, BEER2_DESCRIPTION, manufacturer2());
+        return new Beer(BEER2_NAME, BEER2_GRADUATION, BEER2_TYPE, BEER2_DESCRIPTION, MANUFACTURER2_NAME);
     }
 
     public static BeerDTO beer2Dto() {
-        return new BeerDTO(BEER2_NAME, BEER2_GRADUATION, BEER2_TYPE, BEER2_DESCRIPTION, manufacturer2Dto());
+        return new BeerDTO(BEER2_NAME, BEER2_GRADUATION, BEER2_TYPE, BEER2_DESCRIPTION, MANUFACTURER2_NAME);
     }
 
     public static List<String> allManufacturerNames() {

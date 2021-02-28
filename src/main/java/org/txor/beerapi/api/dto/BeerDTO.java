@@ -6,9 +6,9 @@ public class BeerDTO {
     private final float graduation;
     private final String type;
     private final String description;
-    private final ManufacturerDTO manufacturer;
+    private final String manufacturer;
 
-    public BeerDTO(String name, float graduation, String type, String description, ManufacturerDTO manufacturer) {
+    public BeerDTO(String name, float graduation, String type, String description, String manufacturer) {
         this.name = name;
         this.graduation = graduation;
         this.type = type;
@@ -32,7 +32,7 @@ public class BeerDTO {
         return description;
     }
 
-    public ManufacturerDTO getManufacturer() {
+    public String getManufacturer() {
         return manufacturer;
     }
 }
