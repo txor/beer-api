@@ -38,6 +38,15 @@ public class TestMother {
         return new BeerDTO(BEER1_NAME, BEER1_GRADUATION, BEER1_TYPE, BEER1_DESCRIPTION, MANUFACTURER1_NAME);
     }
 
+    public static String beer1JsonString() {
+        return "{\"name\": \"" + BEER1_NAME + "\", " +
+                "\"graduation\":\"" + BEER1_GRADUATION + "\", " +
+                "\"type\":\"" + BEER1_TYPE + "\", " +
+                "\"description\":\"" + BEER1_DESCRIPTION + "\", " +
+                "\"manufacturer\":\"" + MANUFACTURER1_NAME +
+                "\"}";
+    }
+
     public static Beer beer2() {
         return new Beer(BEER2_NAME, BEER2_GRADUATION, BEER2_TYPE, BEER2_DESCRIPTION, MANUFACTURER2_NAME);
     }

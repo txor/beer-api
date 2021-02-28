@@ -62,6 +62,13 @@ A `GET` request is used to access the beer name list
 
 operation::beer-list-example[snippets='http-request,http-response']
 
+[[resources_beer_create]]
+=== Create a beer
+
+A `POST` request is used to create a beer
+
+operation::beer-create-example[snippets='http-request,http-response']
+
 [[resources_beer_retrieve]]
 === Retrieve a beer
 

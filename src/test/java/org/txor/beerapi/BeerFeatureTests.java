@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -15,14 +16,20 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.txor.beerapi.domain.BeerService;
 import org.txor.beerapi.domain.exceptions.BeerNotFoundException;
+import org.txor.beerapi.domain.model.Beer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseBody;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.txor.beerapi.TestMother.BEER1_DESCRIPTION;
 import static org.txor.beerapi.TestMother.BEER1_GRADUATION;
@@ -32,6 +39,7 @@ import static org.txor.beerapi.TestMother.BEER2_NAME;
 import static org.txor.beerapi.TestMother.MANUFACTURER1_NAME;
 import static org.txor.beerapi.TestMother.allBeerNames;
 import static org.txor.beerapi.TestMother.beer1;
+import static org.txor.beerapi.TestMother.beer1JsonString;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
@@ -60,6 +68,23 @@ class BeerFeatureTests {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0]").value(BEER1_NAME))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1]").value(BEER2_NAME))
                 .andDo(document("beer-list-example", responseBody()));
+    }
+
+    @Test
+    public void create_beer() throws Exception {
+        this.mockMvc.perform(post("/api/beer")
+                .content(beer1JsonString())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andDo(document("beer-create-example",
+                        requestFields(
+                                fieldWithPath("name").description("The beer name"),
+                                fieldWithPath("graduation").description("The beer alcoholic graduation"),
+                                fieldWithPath("type").description("The beer type"),
+                                fieldWithPath("description").description("The beer description"),
+                                fieldWithPath("manufacturer").description("The beer manufacturer name"))));
+
+        verify(beerService).createBeer(any(Beer.class));
     }
 
     @Test

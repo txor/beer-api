@@ -27,29 +27,29 @@ public class ManufacturerController {
     @Autowired
     ManufacturerConverter manufacturerConverter;
 
-    @GetMapping(value = "/api/manufacturers")
+    @GetMapping("/api/manufacturers")
     public List<String> getAllManufacturerNames() {
         return manufacturerService.getAllManufacturerNames();
     }
 
-    @GetMapping(value = "/api/manufacturer/{name}")
-    public ManufacturerDTO getManufacturer(@PathVariable String name) {
-        return manufacturerConverter.convert(manufacturerService.getManufacturer(name));
-    }
-
-    @PostMapping(value = "/api/manufacturer")
+    @PostMapping("/api/manufacturer")
     @ResponseStatus(HttpStatus.CREATED)
     public void createManufacturer(@Valid @RequestBody ManufacturerDTO manufacturer) {
         manufacturerService.createManufacturer(manufacturerConverter.convert(manufacturer));
     }
 
-    @PutMapping(value = "/api/manufacturer/{name}")
+    @GetMapping("/api/manufacturer/{name}")
+    public ManufacturerDTO retrieveManufacturer(@PathVariable String name) {
+        return manufacturerConverter.convert(manufacturerService.getManufacturer(name));
+    }
+
+    @PutMapping("/api/manufacturer/{name}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateManufacturer(@PathVariable String name, @Valid @RequestBody ManufacturerDTO manufacturer) {
         manufacturerService.updateManufacturer(name, manufacturerConverter.convert(manufacturer));
     }
 
-    @DeleteMapping(value = "/api/manufacturer/{name}")
+    @DeleteMapping("/api/manufacturer/{name}")
     public void deleteManufacturer(@PathVariable String name) {
         manufacturerService.deleteManufacturer(name);
     }

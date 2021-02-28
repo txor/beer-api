@@ -14,4 +14,7 @@ public class BeerService {
     public Beer getBeer(String name) {
         return null;
     }
+
+    public void createBeer(Beer beer) {
+    }
 }
