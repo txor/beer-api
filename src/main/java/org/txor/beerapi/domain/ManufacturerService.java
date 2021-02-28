@@ -17,4 +17,7 @@ public class ManufacturerService {
 
     public void createManufacturer(Manufacturer manufacturer) {
     }
+
+    public void updateManufacturer(String manufacturer, Manufacturer manufacturerInformation) {
+    }
 }

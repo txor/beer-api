@@ -21,6 +21,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.txor.beerapi.TestMother.MANUFACTURER1_NAME;
 import static org.txor.beerapi.TestMother.MANUFACTURER1_NATIONALITY;
@@ -43,6 +44,12 @@ class ManufacturerControllerTest {
 
     @Captor
     ArgumentCaptor<Manufacturer> manufacturerCaptor;
+
+    @Captor
+    ArgumentCaptor<ManufacturerDTO> manufacturerDtoCaptor;
+
+    @Captor
+    ArgumentCaptor<String> manufacturerNameCaptor;
 
     @Test
     public void getAllManufacturerNames_should_rely_on_service_to_return_all_the_manufacturer_names() throws Exception {
@@ -82,8 +89,33 @@ class ManufacturerControllerTest {
     }
 
     @Test
-    public void createManufacturer_badrequest() throws Exception {
+    public void createManufacturer_returns_badRequest_for_bad_manufacturer_data() throws Exception {
         this.mockMvc.perform(post("/api/manufacturer")
+                .content("{\"bad\": \"manufacturer data\"}")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void updateManufacturer_should_rely_on_service_to_create_the_given_manufacturer() throws Exception {
+        when(manufacturerConverter.convert(any(ManufacturerDTO.class))).thenReturn(manufacturer1());
+
+        this.mockMvc.perform(put("/api/manufacturer/{name}", "some manufacturer")
+                .content("{\"name\": \"" + MANUFACTURER1_NAME + "\", \"nationality\":\"" + MANUFACTURER1_NATIONALITY + "\"}")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+        verify(manufacturerConverter).convert(manufacturerDtoCaptor.capture());
+        assertThat(manufacturerDtoCaptor.getValue().getName()).isEqualTo(MANUFACTURER1_NAME);
+        assertThat(manufacturerDtoCaptor.getValue().getNationality()).isEqualTo(MANUFACTURER1_NATIONALITY);
+        verify(manufacturerService).updateManufacturer(manufacturerNameCaptor.capture(), manufacturerCaptor.capture());
+        assertThat(manufacturerNameCaptor.getValue()).isEqualTo("some manufacturer");
+        assertThat(manufacturerCaptor.getValue().getName()).isEqualTo(MANUFACTURER1_NAME);
+        assertThat(manufacturerCaptor.getValue().getNationality()).isEqualTo(MANUFACTURER1_NATIONALITY);
+    }
+
+    @Test
+    public void updateManufacturer_returns_badRequest_for_bad_manufacturer_data() throws Exception {
+        this.mockMvc.perform(put("/api/manufacturer/{name}", "some manufacturer")
                 .content("{\"bad\": \"manufacturer data\"}")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());

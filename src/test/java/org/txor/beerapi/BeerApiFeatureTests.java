@@ -20,7 +20,9 @@ import org.txor.beerapi.domain.exceptions.BeerNotFoundException;
 import org.txor.beerapi.domain.exceptions.ManufacturerNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
@@ -29,6 +31,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.requestF
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseBody;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.txor.beerapi.TestMother.BEER1_DESCRIPTION;
 import static org.txor.beerapi.TestMother.BEER1_GRADUATION;
@@ -152,12 +155,35 @@ class BeerApiFeatureTests {
     public void create_manufacturer() throws Exception {
         this.mockMvc.perform(post("/api/manufacturer")
                 .content("{\"name\": \"" + MANUFACTURER1_NAME + "\", \"nationality\":\"" + MANUFACTURER1_NATIONALITY + "\"}")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andDo(document("manufacturer-create-example",
                         requestFields(
                                 fieldWithPath("name").description("The name of the manufacturer"),
                                 fieldWithPath("nationality").description("The nationality of the manufacturer"))));
+    }
+
+    @Test
+    public void update_manufacturer_info() throws Exception {
+        this.mockMvc.perform(put("/api/manufacturer/{name}", "some manufacturer")
+                .content("{\"name\": \"" + MANUFACTURER1_NAME + "\", \"nationality\":\"" + MANUFACTURER1_NATIONALITY + "\"}")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent())
+                .andDo(document("manufacturer-update-example",
+                        requestFields(
+                                fieldWithPath("name").description("The name of the manufacturer"),
+                                fieldWithPath("nationality").description("The nationality of the manufacturer"))));
+    }
+
+    @Test
+    public void update_unexisting_manufacturer_information() throws Exception {
+        String unexistingManufacturer = "unexisting manufacturer";
+        doThrow(new ManufacturerNotFoundException(unexistingManufacturer)).when(manufacturerService).updateManufacturer(anyString(), any());
+
+        this.mockMvc.perform(put("/api/manufacturer/{name}/", unexistingManufacturer)
+                .content("{\"name\": \"" + MANUFACTURER1_NAME + "\", \"nationality\":\"" + MANUFACTURER1_NATIONALITY + "\"}")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(result -> assertEquals(unexistingManufacturer + " not found", result.getResponse().getContentAsString()));
     }
 }

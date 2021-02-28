@@ -77,12 +77,12 @@ operation::manufacturer-list-example[snippets='http-request,curl-request,http-re
 [[resources_manufacturer]]
 == Manufacturer
 
-[[resources_manufacturer_retrieve]]
+[[resources_manufacturer_create]]
 === Create a manufacturer
 
 A `POST` request is used to create a manufacturer
 
-operation::manufacturer-create-example[snippets='http-request,request-body,curl-request,http-response']
+operation::manufacturer-create-example[snippets='http-request,curl-request,http-response']
 
 [[resources_manufacturer_retrieve]]
 === Retrieve a manufacturer
@@ -90,3 +90,10 @@ operation::manufacturer-create-example[snippets='http-request,request-body,curl-
 A `GET` request will retrieve the details of a manufacturer
 
 operation::manufacturer-get-example[snippets='http-request,curl-request,http-response']
+
+[[resources_manufacturer_update]]
+=== Update manufacturer information
+
+A `PUT` request is used to update manufacturer information.
+
+operation::manufacturer-update-example[snippets='http-request,curl-request,http-response']
