@@ -16,11 +16,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.txor.beerapi.domain.ManufacturerService;
 import org.txor.beerapi.domain.exceptions.ManufacturerNotFoundException;
+import org.txor.beerapi.domain.model.Manufacturer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
@@ -78,6 +80,8 @@ class ManufacturerFeatureTests {
                         requestFields(
                                 fieldWithPath("name").description("The name of the manufacturer"),
                                 fieldWithPath("nationality").description("The nationality of the manufacturer"))));
+
+        verify(manufacturerService).createManufacturer(any(Manufacturer.class));
     }
 
     @Test
@@ -119,6 +123,8 @@ class ManufacturerFeatureTests {
                         requestFields(
                                 fieldWithPath("name").description("The name of the manufacturer"),
                                 fieldWithPath("nationality").description("The nationality of the manufacturer"))));
+
+        verify(manufacturerService).updateManufacturer(anyString(), any(Manufacturer.class));
     }
 
     @Test
@@ -146,6 +152,8 @@ class ManufacturerFeatureTests {
         this.mockMvc.perform(delete("/api/manufacturer/{name}", MANUFACTURER1_NAME))
                 .andExpect(status().isOk())
                 .andDo(document("manufacturer-delete-example"));
+
+        verify(manufacturerService).deleteManufacturer(anyString());
     }
 
     @Test

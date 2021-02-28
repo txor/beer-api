@@ -10,6 +10,6 @@ public class ManufacturerConverter {
     }
 
     public Manufacturer convert(ManufacturerDTO manufacturer) {
-        return null;
+        return new Manufacturer(manufacturer.getName(), manufacturer.getNationality());
     }
 }
