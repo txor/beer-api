@@ -21,6 +21,7 @@ import org.txor.beerapi.domain.model.Beer;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -143,5 +144,17 @@ class BeerFeatureTests {
                 .content("{\"bad\": \"beer data\"}")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void not_update_non_existing_beer() throws Exception {
+        String nonExistingBeer = "non existing beer";
+        doThrow(new BeerNotFoundException(nonExistingBeer)).when(beerService).updateBeer(anyString(), any());
+
+        this.mockMvc.perform(put("/api/beer/{name}", nonExistingBeer)
+                .content(beer1JsonString())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(result -> assertEquals(nonExistingBeer + " not found", result.getResponse().getContentAsString()));
     }
 }

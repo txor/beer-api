@@ -21,6 +21,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.txor.beerapi.TestMother.BEER1_DESCRIPTION;
 import static org.txor.beerapi.TestMother.BEER1_GRADUATION;
@@ -50,6 +51,9 @@ class BeerControllerTest {
 
     @Captor
     private ArgumentCaptor<Beer> beerCaptor;
+
+    @Captor
+    private ArgumentCaptor<String> beerNameCaptor;
 
     @Test
     public void getAllBeerNames_should_call_the_domain_collaborator() throws Exception {
@@ -96,5 +100,29 @@ class BeerControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(BEER1_NAME));
         verify(beerService).getBeer(BEER1_NAME);
         verify(beerConverter).convert(any(Beer.class));
+    }
+
+    @Test
+    public void updateBeer_should_convert_the_data_and_call_the_domain_collaborator() throws Exception {
+        when(beerConverter.convert(any(BeerDTO.class))).thenReturn(beer1());
+
+        this.mockMvc.perform(put("/api/beer/{name}", "some beer")
+                .content(beer1JsonString())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+
+        verify(beerConverter).convert(beerDtoCaptor.capture());
+        assertThat(beerDtoCaptor.getValue().getName()).isEqualTo(BEER1_NAME);
+        assertThat(beerDtoCaptor.getValue().getGraduation()).isEqualTo(BEER1_GRADUATION);
+        assertThat(beerDtoCaptor.getValue().getType()).isEqualTo(BEER1_TYPE);
+        assertThat(beerDtoCaptor.getValue().getDescription()).isEqualTo(BEER1_DESCRIPTION);
+        assertThat(beerDtoCaptor.getValue().getManufacturer()).isEqualTo(MANUFACTURER1_NAME);
+        verify(beerService).updateBeer(beerNameCaptor.capture(), beerCaptor.capture());
+        assertThat(beerNameCaptor.getValue()).isEqualTo("some beer");
+        assertThat(beerCaptor.getValue().getName()).isEqualTo(BEER1_NAME);
+        assertThat(beerCaptor.getValue().getGraduation()).isEqualTo(BEER1_GRADUATION);
+        assertThat(beerCaptor.getValue().getType()).isEqualTo(BEER1_TYPE);
+        assertThat(beerCaptor.getValue().getDescription()).isEqualTo(BEER1_DESCRIPTION);
+        assertThat(beerCaptor.getValue().getManufacturer()).isEqualTo(MANUFACTURER1_NAME);
     }
 }

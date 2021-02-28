@@ -65,21 +65,6 @@ class ManufacturerControllerTest {
     }
 
     @Test
-    public void getManufacturer_should_call_the_domain_collaborator_and_convert_back_the_data() throws Exception {
-        when(manufacturerService.getManufacturer(anyString())).thenReturn(manufacturer1());
-        when(manufacturerConverter.convert(any(Manufacturer.class))).thenReturn(manufacturer1Dto());
-
-        this.mockMvc.perform(get("/api/manufacturer/{name}", MANUFACTURER1_NAME))
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(MANUFACTURER1_NAME))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.nationality").value(MANUFACTURER1_NATIONALITY));
-
-        verify(manufacturerService).getManufacturer(manufacturerNameCaptor.capture());
-        assertThat(manufacturerNameCaptor.getValue()).isEqualTo(MANUFACTURER1_NAME);
-        verify(manufacturerConverter).convert(any(Manufacturer.class));
-    }
-
-    @Test
     public void createManufacturer_should_convert_the_data_and_call_the_domain_collaborator() throws Exception {
         when(manufacturerConverter.convert(any(ManufacturerDTO.class))).thenReturn(manufacturer1());
 
@@ -94,6 +79,21 @@ class ManufacturerControllerTest {
         verify(manufacturerService).createManufacturer(manufacturerCaptor.capture());
         assertThat(manufacturerCaptor.getValue().getName()).isEqualTo(MANUFACTURER1_NAME);
         assertThat(manufacturerCaptor.getValue().getNationality()).isEqualTo(MANUFACTURER1_NATIONALITY);
+    }
+
+    @Test
+    public void getManufacturer_should_call_the_domain_collaborator_and_convert_back_the_data() throws Exception {
+        when(manufacturerService.getManufacturer(anyString())).thenReturn(manufacturer1());
+        when(manufacturerConverter.convert(any(Manufacturer.class))).thenReturn(manufacturer1Dto());
+
+        this.mockMvc.perform(get("/api/manufacturer/{name}", MANUFACTURER1_NAME))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(MANUFACTURER1_NAME))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.nationality").value(MANUFACTURER1_NATIONALITY));
+
+        verify(manufacturerService).getManufacturer(manufacturerNameCaptor.capture());
+        assertThat(manufacturerNameCaptor.getValue()).isEqualTo(MANUFACTURER1_NAME);
+        verify(manufacturerConverter).convert(any(Manufacturer.class));
     }
 
     @Test
