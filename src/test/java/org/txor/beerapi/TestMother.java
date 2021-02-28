@@ -58,6 +58,10 @@ public class TestMother {
         return new ManufacturerDTO(MANUFACTURER1_NAME, MANUFACTURER1_NATIONALITY);
     }
 
+    public static String manufacturer1JsonString() {
+        return "{\"name\": \"" + MANUFACTURER1_NAME + "\", \"nationality\":\"" + MANUFACTURER1_NATIONALITY + "\"}";
+    }
+
     public static Manufacturer manufacturer2() {
         return new Manufacturer(MANUFACTURER2_NAME, MANUFACTURER2_NATIONALITY);
     }

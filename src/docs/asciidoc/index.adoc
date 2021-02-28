@@ -50,7 +50,7 @@ The beer list provides information about all existing beers and its manufacturer
 
 A `GET` request is used to access the index
 
-operation::beer-list-example[snippets='http-request,curl-request,http-response']
+operation::beer-list-example[snippets='http-request,http-response']
 
 [[resources_beer]]
 == Beer
@@ -60,47 +60,42 @@ operation::beer-list-example[snippets='http-request,curl-request,http-response']
 
 A `GET` request will retrieve the details of a beer
 
-operation::beer-get-example[snippets='http-request,curl-request,http-response']
-
-[[resources_manufacturers]]
-== Manufacturer list
-
-The manufacturer list provides the names of all manufacturers.
-
-[[resources_manufacturers_access]]
-=== Accessing the manufacturer list
-
-A `GET` request is used to access the manufacturer list
-
-operation::manufacturer-list-example[snippets='http-request,curl-request,http-response']
+operation::beer-get-example[snippets='http-request,http-response']
 
 [[resources_manufacturer]]
 == Manufacturer
+
+[[resources_manufacturer_mane_list]]
+=== Retrieve a manufacturer name list
+
+A `GET` request is used to access the manufacturer name list
+
+operation::manufacturer-list-example[snippets='http-request,http-response']
 
 [[resources_manufacturer_create]]
 === Create a manufacturer
 
 A `POST` request is used to create a manufacturer
 
-operation::manufacturer-create-example[snippets='http-request,curl-request,http-response']
+operation::manufacturer-create-example[snippets='http-request,http-response']
 
 [[resources_manufacturer_retrieve]]
 === Retrieve a manufacturer
 
 A `GET` request will retrieve the details of a manufacturer
 
-operation::manufacturer-get-example[snippets='http-request,curl-request,http-response']
+operation::manufacturer-get-example[snippets='http-request,http-response']
 
 [[resources_manufacturer_update]]
 === Update manufacturer information
 
 A `PUT` request is used to update manufacturer information.
 
-operation::manufacturer-update-example[snippets='http-request,curl-request,http-response']
+operation::manufacturer-update-example[snippets='http-request,http-response']
 
 [[resources_manufacturer_delete]]
 === Delete manufacturer
 
 A `DELETE` request is used to delete a manufacturer.
 
-operation::manufacturer-delete-example[snippets='http-request,curl-request,http-response']
+operation::manufacturer-delete-example[snippets='http-request,http-response']
