@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.txor.beerapi.domain.BeerService;
+import org.txor.beerapi.domain.ManufacturerService;
 import org.txor.beerapi.domain.exceptions.BeerNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -32,6 +33,9 @@ import static org.txor.beerapi.TestMother.BEER2_DESCRIPTION;
 import static org.txor.beerapi.TestMother.BEER2_GRADUATION;
 import static org.txor.beerapi.TestMother.BEER2_NAME;
 import static org.txor.beerapi.TestMother.BEER2_TYPE;
+import static org.txor.beerapi.TestMother.MANUFACTURER1_NAME;
+import static org.txor.beerapi.TestMother.MANUFACTURER2_NAME;
+import static org.txor.beerapi.TestMother.allManufacturerNames;
 import static org.txor.beerapi.TestMother.beer1;
 import static org.txor.beerapi.TestMother.someBeers;
 
@@ -43,7 +47,10 @@ class BeerApiFeatureTests {
     private WebApplicationContext context;
 
     @MockBean
-    private BeerService service;
+    private BeerService beerService;
+
+    @MockBean
+    private ManufacturerService manufacturerService;
 
     private MockMvc mockMvc;
 
@@ -55,7 +62,7 @@ class BeerApiFeatureTests {
 
     @Test
     public void list_all_beers() throws Exception {
-        when(service.getAllBeers()).thenReturn(someBeers());
+        when(beerService.getAllBeers()).thenReturn(someBeers());
 
         this.mockMvc.perform(get("/api/beers"))
                 .andExpect(status().isOk())
@@ -78,7 +85,7 @@ class BeerApiFeatureTests {
 
     @Test
     public void obtain_beer_information() throws Exception {
-        when(service.getBeer(anyString())).thenReturn(beer1());
+        when(beerService.getBeer(anyString())).thenReturn(beer1());
 
         this.mockMvc.perform(get("/api/beer/{name}/", BEER1_NAME))
                 .andExpect(status().isOk())
@@ -95,10 +102,21 @@ class BeerApiFeatureTests {
     @Test
     public void obtain_unexisting_beer_information() throws Exception {
         String unexistingBeer = "unexisting beer";
-        when(service.getBeer(unexistingBeer)).thenThrow(new BeerNotFoundException(unexistingBeer));
+        when(beerService.getBeer(unexistingBeer)).thenThrow(new BeerNotFoundException(unexistingBeer));
 
         this.mockMvc.perform(get("/api/beer/{name}/", unexistingBeer))
                 .andExpect(status().isNotFound())
                 .andExpect(result -> assertEquals(unexistingBeer + " not found", result.getResponse().getContentAsString()));
+    }
+
+    @Test
+    public void list_all_manufacturers() throws Exception {
+        when(manufacturerService.getAllManufacturerNames()).thenReturn(allManufacturerNames());
+
+        this.mockMvc.perform(get("/api/manufacturers"))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0]").value(MANUFACTURER1_NAME))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1]").value(MANUFACTURER2_NAME))
+                .andDo(document("manufacturer-list-example", responseBody()));
     }
 }

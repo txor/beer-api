@@ -46,6 +46,10 @@ public class TestMother {
         return new BeerDTO(BEER2_NAME, BEER2_GRADUATION, BEER2_TYPE, BEER2_DESCRIPTION, manufacturer2Dto());
     }
 
+    public static List<String> allManufacturerNames() {
+        return Arrays.asList(MANUFACTURER1_NAME, MANUFACTURER2_NAME);
+    }
+
     public static Manufacturer manufacturer1() {
         return new Manufacturer(MANUFACTURER1_NAME, MANUFACTURER1_NATIONALITY);
     }
