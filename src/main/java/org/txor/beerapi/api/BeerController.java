@@ -12,6 +12,7 @@ import org.txor.beerapi.api.converters.BeerConverter;
 import org.txor.beerapi.api.dto.BeerDTO;
 import org.txor.beerapi.domain.BeerService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -30,7 +31,7 @@ public class BeerController {
 
     @PostMapping("/api/beer")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createBeer(@RequestBody BeerDTO beer) {
+    public void createBeer(@Valid @RequestBody BeerDTO beer) {
         beerService.createBeer(beerConverter.convert(beer));
     }
 

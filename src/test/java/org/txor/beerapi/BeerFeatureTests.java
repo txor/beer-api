@@ -88,6 +88,14 @@ class BeerFeatureTests {
     }
 
     @Test
+    public void not_create_beer_with_bad_data() throws Exception {
+        this.mockMvc.perform(post("/api/beer")
+                .content("{\"bad\": \"beer data\"}")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+    
+    @Test
     public void retrieve_beer_information() throws Exception {
         when(beerService.getBeer(anyString())).thenReturn(beer1());
 

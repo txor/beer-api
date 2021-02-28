@@ -1,7 +1,10 @@
 package org.txor.beerapi.api.dto;
 
+import javax.validation.constraints.NotBlank;
+
 public class BeerDTO {
 
+    @NotBlank()
     private final String name;
     private final float graduation;
     private final String type;
