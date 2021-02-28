@@ -18,6 +18,9 @@ public class BeerService {
     public void createBeer(Beer beer) {
     }
 
-    public void updateBeer(String beer, Beer beerData) {
+    public void updateBeer(String name, Beer beerData) {
+    }
+
+    public void deleteBeer(String name) {
     }
 }

@@ -83,6 +83,13 @@ A `PUT` request is used to update beer information.
 
 operation::beer-update-example[snippets='http-request,http-response']
 
+[[resources_beer_delete]]
+=== Delete beer
+
+A `DELETE` request is used to delete a beer.
+
+operation::beer-delete-example[snippets='http-request,http-response']
+
 [[resources_manufacturer]]
 == Manufacturer
 

@@ -29,6 +29,7 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseBody;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -156,5 +157,14 @@ class BeerFeatureTests {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(result -> assertEquals(nonExistingBeer + " not found", result.getResponse().getContentAsString()));
+    }
+
+    @Test
+    public void delete_beer() throws Exception {
+        this.mockMvc.perform(delete("/api/beer/{name}", MANUFACTURER1_NAME))
+                .andExpect(status().isOk())
+                .andDo(document("beer-delete-example"));
+
+        verify(beerService).deleteBeer(anyString());
     }
 }

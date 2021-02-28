@@ -19,6 +19,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -124,5 +125,13 @@ class BeerControllerTest {
         assertThat(beerCaptor.getValue().getType()).isEqualTo(BEER1_TYPE);
         assertThat(beerCaptor.getValue().getDescription()).isEqualTo(BEER1_DESCRIPTION);
         assertThat(beerCaptor.getValue().getManufacturer()).isEqualTo(MANUFACTURER1_NAME);
+    }
+
+    @Test
+    public void deleteBeer_should_call_the_domain_collaborator() throws Exception {
+        this.mockMvc.perform(delete("/api/beer/{name}", BEER1_NAME))
+                .andExpect(status().isOk());
+
+        verify(beerService).deleteBeer(BEER1_NAME);
     }
 }
