@@ -118,6 +118,7 @@ class ManufacturerControllerTest {
     public void deleteManufacturer_should_call_the_domain_collaborator() throws Exception {
         this.mockMvc.perform(delete("/api/manufacturer/{name}", MANUFACTURER1_NAME))
                 .andExpect(status().isOk());
+
         verify(manufacturerService).deleteManufacturer(MANUFACTURER1_NAME);
     }
 }

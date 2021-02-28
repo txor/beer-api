@@ -167,4 +167,14 @@ class BeerFeatureTests {
 
         verify(beerService).deleteBeer(anyString());
     }
+
+    @Test
+    public void not_delete_non_existing_beer() throws Exception {
+        String nonExistingBeer = "non existing beer";
+        doThrow(new BeerNotFoundException(nonExistingBeer)).when(beerService).deleteBeer(anyString());
+
+        this.mockMvc.perform(delete("/api/beer/{name}", BEER1_NAME))
+                .andExpect(status().isNotFound())
+                .andExpect(result -> assertEquals(nonExistingBeer + " not found", result.getResponse().getContentAsString()));
+    }
 }
