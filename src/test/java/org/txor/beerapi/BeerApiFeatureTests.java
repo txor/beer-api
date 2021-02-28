@@ -16,6 +16,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.txor.beerapi.domain.BeerService;
 import org.txor.beerapi.domain.ManufacturerService;
 import org.txor.beerapi.domain.exceptions.BeerNotFoundException;
+import org.txor.beerapi.domain.exceptions.ManufacturerNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -34,9 +35,11 @@ import static org.txor.beerapi.TestMother.BEER2_GRADUATION;
 import static org.txor.beerapi.TestMother.BEER2_NAME;
 import static org.txor.beerapi.TestMother.BEER2_TYPE;
 import static org.txor.beerapi.TestMother.MANUFACTURER1_NAME;
+import static org.txor.beerapi.TestMother.MANUFACTURER1_NATIONALITY;
 import static org.txor.beerapi.TestMother.MANUFACTURER2_NAME;
 import static org.txor.beerapi.TestMother.allManufacturerNames;
 import static org.txor.beerapi.TestMother.beer1;
+import static org.txor.beerapi.TestMother.manufacturer1;
 import static org.txor.beerapi.TestMother.someBeers;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -87,7 +90,7 @@ class BeerApiFeatureTests {
     public void obtain_beer_information() throws Exception {
         when(beerService.getBeer(anyString())).thenReturn(beer1());
 
-        this.mockMvc.perform(get("/api/beer/{name}/", BEER1_NAME))
+        this.mockMvc.perform(get("/api/beer/{name}", BEER1_NAME))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(BEER1_NAME))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.graduation").value(BEER1_GRADUATION))
@@ -118,5 +121,26 @@ class BeerApiFeatureTests {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0]").value(MANUFACTURER1_NAME))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1]").value(MANUFACTURER2_NAME))
                 .andDo(document("manufacturer-list-example", responseBody()));
+    }
+
+    @Test
+    public void obtain_manufacturer_information() throws Exception {
+        when(manufacturerService.getManufacturer(anyString())).thenReturn(manufacturer1());
+
+        this.mockMvc.perform(get("/api/manufacturer/{name}", MANUFACTURER1_NAME))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(MANUFACTURER1_NAME))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.nationality").value(MANUFACTURER1_NATIONALITY))
+                .andDo(document("manufacturer-get-example", responseBody()));
+    }
+
+    @Test
+    public void obtain_unexisting_manufacturer_information() throws Exception {
+        String unexistingManufacturer = "unexisting manufacturer";
+        when(manufacturerService.getManufacturer(unexistingManufacturer)).thenThrow(new ManufacturerNotFoundException(unexistingManufacturer));
+
+        this.mockMvc.perform(get("/api/manufacturer/{name}/", unexistingManufacturer))
+                .andExpect(status().isNotFound())
+                .andExpect(result -> assertEquals(unexistingManufacturer + " not found", result.getResponse().getContentAsString()));
     }
 }

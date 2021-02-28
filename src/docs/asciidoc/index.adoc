@@ -71,3 +71,13 @@ The manufacturer list provides the names of all manufacturers.
 A `GET` request is used to access the manufacturer list
 
 operation::manufacturer-list-example[snippets='http-request,curl-request,http-response']
+
+[[resources_manufacturer]]
+== Manufacturer
+
+[[resources_manufacturer_retrieve]]
+=== Retrieve a manufacturer
+
+A `GET` request will retrieve the details of a manufacturer
+
+operation::manufacturer-get-example[snippets='http-request,curl-request,http-response']
