@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,5 +39,11 @@ public class BeerController {
     @GetMapping("/api/beer/{name}")
     public BeerDTO retrieveBeer(@PathVariable String name) {
         return beerConverter.convert(beerService.getBeer(name));
+    }
+
+    @PutMapping("/api/beer/{name}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateBeer(@PathVariable String name, @RequestBody BeerDTO beer) {
+        beerService.updateBeer(name, beerConverter.convert(beer));
     }
 }

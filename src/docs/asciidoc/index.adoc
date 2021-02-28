@@ -76,6 +76,13 @@ A `GET` request will retrieve the details of a beer
 
 operation::beer-get-example[snippets='http-request,http-response']
 
+[[resources_beer_update]]
+=== Update beer information
+
+A `PUT` request is used to update beer information.
+
+operation::beer-update-example[snippets='http-request,http-response']
+
 [[resources_manufacturer]]
 == Manufacturer
 

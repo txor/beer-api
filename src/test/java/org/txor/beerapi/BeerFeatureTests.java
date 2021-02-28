@@ -30,6 +30,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.requestF
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseBody;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.txor.beerapi.TestMother.BEER1_DESCRIPTION;
 import static org.txor.beerapi.TestMother.BEER1_GRADUATION;
@@ -94,7 +95,7 @@ class BeerFeatureTests {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }
-    
+
     @Test
     public void retrieve_beer_information() throws Exception {
         when(beerService.getBeer(anyString())).thenReturn(beer1());
@@ -117,5 +118,22 @@ class BeerFeatureTests {
         this.mockMvc.perform(get("/api/beer/{name}/", nonExistingBeer))
                 .andExpect(status().isNotFound())
                 .andExpect(result -> assertEquals(nonExistingBeer + " not found", result.getResponse().getContentAsString()));
+    }
+
+    @Test
+    public void update_beer_information() throws Exception {
+        this.mockMvc.perform(put("/api/beer/{name}", "some beer")
+                .content(beer1JsonString())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent())
+                .andDo(document("beer-update-example",
+                        requestFields(
+                                fieldWithPath("name").description("The beer name"),
+                                fieldWithPath("graduation").description("The beer alcoholic graduation"),
+                                fieldWithPath("type").description("The beer type"),
+                                fieldWithPath("description").description("The beer description"),
+                                fieldWithPath("manufacturer").description("The beer manufacturer name"))));
+
+        verify(beerService).updateBeer(anyString(), any(Beer.class));
     }
 }
