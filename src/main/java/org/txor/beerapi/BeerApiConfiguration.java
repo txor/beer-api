@@ -17,7 +17,7 @@ public class BeerApiConfiguration {
 
     @Bean
     public ManufacturerService manufacturerService() {
-        return new ManufacturerService();
+        return new ManufacturerService(null);
     }
 
     @Bean
