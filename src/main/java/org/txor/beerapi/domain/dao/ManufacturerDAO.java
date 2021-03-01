@@ -6,7 +6,7 @@ import org.txor.beerapi.repository.entity.Manufacturer;
 
 import java.util.List;
 
-public interface ManufacturerDAO extends CrudRepository<Manufacturer, Long> {
+public interface ManufacturerDAO extends CrudRepository<Manufacturer, String> {
 
     @Query(nativeQuery = true, value = "SELECT name FROM manufacturer")
     List<String> getAllManufacturerNames();

@@ -7,8 +7,11 @@ import javax.persistence.Id;
 public class Manufacturer {
 
     @Id
-    private final String name;
-    private final String nationality;
+    private String name;
+    private String nationality;
+
+    protected Manufacturer() {
+    }
 
     public Manufacturer(String name, String nationality) {
         this.name = name;
