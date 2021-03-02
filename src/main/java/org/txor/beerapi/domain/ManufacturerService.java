@@ -21,7 +21,7 @@ public class ManufacturerService {
     }
 
     public Manufacturer getManufacturer(String name) {
-        return null;
+        return manufacturerRepository.getManufacturer(name);
     }
 
     public void updateManufacturer(String manufacturer, Manufacturer manufacturerInformation) {

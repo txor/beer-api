@@ -83,6 +83,7 @@ class ManufacturerFeatureTests {
     }
 
     @Test
+    @Sql({"/test_data.sql"})
     public void retrieve_manufacturer_information() throws Exception {
         this.mockMvc.perform(get("/api/manufacturer/{name}", MANUFACTURER1_NAME))
                 .andExpect(status().isOk())

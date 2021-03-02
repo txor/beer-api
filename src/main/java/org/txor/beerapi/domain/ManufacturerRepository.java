@@ -9,4 +9,6 @@ public interface ManufacturerRepository {
     List<String> getAllManufacturerNames();
 
     void saveManufacturer(Manufacturer manufacturer);
+
+    Manufacturer getManufacturer(String manufacturerName);
 }

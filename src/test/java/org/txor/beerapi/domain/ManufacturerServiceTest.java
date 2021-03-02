@@ -43,4 +43,13 @@ class ManufacturerServiceTest {
 
         verify(repository).saveManufacturer(any(Manufacturer.class));
     }
+
+    @Test
+    public void getManufacturer_should_call_the_repository_with_the_given_name() {
+        ManufacturerService manufacturerService = new ManufacturerService(repository);
+
+        manufacturerService.getManufacturer(MANUFACTURER1_NAME);
+
+        verify(repository).getManufacturer(MANUFACTURER1_NAME);
+    }
 }

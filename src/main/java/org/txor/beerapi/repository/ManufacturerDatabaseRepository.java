@@ -29,4 +29,9 @@ public class ManufacturerDatabaseRepository implements ManufacturerRepository {
     public void saveManufacturer(Manufacturer manufacturer) {
         manufacturerDAO.save(converter.convert(manufacturer));
     }
+
+    @Override
+    public Manufacturer getManufacturer(String manufacturerName) {
+        return null;
+    }
 }
