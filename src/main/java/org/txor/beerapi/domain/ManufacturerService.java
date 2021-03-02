@@ -17,6 +17,7 @@ public class ManufacturerService {
     }
 
     public void createManufacturer(Manufacturer manufacturer) {
+        manufacturerRepository.saveManufacturer(manufacturer);
     }
 
     public Manufacturer getManufacturer(String name) {
