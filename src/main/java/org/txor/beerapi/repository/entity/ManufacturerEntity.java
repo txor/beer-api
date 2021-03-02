@@ -2,18 +2,20 @@ package org.txor.beerapi.repository.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-public class Manufacturer {
+@Table(name = "manufacturer")
+public class ManufacturerEntity {
 
     @Id
     private String name;
     private String nationality;
 
-    protected Manufacturer() {
+    protected ManufacturerEntity() {
     }
 
-    public Manufacturer(String name, String nationality) {
+    public ManufacturerEntity(String name, String nationality) {
         this.name = name;
         this.nationality = nationality;
     }

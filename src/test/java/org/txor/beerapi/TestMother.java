@@ -4,6 +4,7 @@ import org.txor.beerapi.api.dto.BeerDTO;
 import org.txor.beerapi.api.dto.ManufacturerDTO;
 import org.txor.beerapi.domain.model.Beer;
 import org.txor.beerapi.domain.model.Manufacturer;
+import org.txor.beerapi.repository.entity.ManufacturerEntity;
 
 import java.util.Arrays;
 import java.util.List;
@@ -66,6 +67,11 @@ public class TestMother {
     public static ManufacturerDTO manufacturer1Dto() {
         return new ManufacturerDTO(MANUFACTURER1_NAME, MANUFACTURER1_NATIONALITY);
     }
+
+    public static ManufacturerEntity manufacturer1Entity() {
+        return new ManufacturerEntity(MANUFACTURER1_NAME, MANUFACTURER1_NATIONALITY);
+    }
+
 
     public static String manufacturer1JsonString() {
         return "{\"name\": \"" + MANUFACTURER1_NAME + "\", \"nationality\":\"" + MANUFACTURER1_NATIONALITY + "\"}";
