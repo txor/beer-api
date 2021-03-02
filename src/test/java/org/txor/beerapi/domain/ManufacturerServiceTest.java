@@ -1,7 +1,6 @@
 package org.txor.beerapi.domain;
 
 import org.junit.jupiter.api.Test;
-import org.txor.beerapi.domain.dao.ManufacturerDAO;
 
 import java.util.List;
 
@@ -15,8 +14,8 @@ import static org.txor.beerapi.TestMother.allManufacturerNames;
 class ManufacturerServiceTest {
 
     @Test
-    public void getAllManufacturerNames_should_obtain_all_names_from_the_dao() {
-        ManufacturerDAO dao = mock(ManufacturerDAO.class);
+    public void getAllManufacturerNames_should_obtain_all_names_from_the_repository() {
+        ManufacturerRepository dao = mock(ManufacturerRepository.class);
         when(dao.getAllManufacturerNames()).thenReturn(allManufacturerNames());
         ManufacturerService manufacturerService = new ManufacturerService(dao);
 

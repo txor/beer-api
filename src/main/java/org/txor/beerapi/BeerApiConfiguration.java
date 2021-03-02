@@ -7,13 +7,13 @@ import org.txor.beerapi.api.converters.BeerConverter;
 import org.txor.beerapi.api.converters.ManufacturerConverter;
 import org.txor.beerapi.domain.BeerService;
 import org.txor.beerapi.domain.ManufacturerService;
-import org.txor.beerapi.domain.dao.ManufacturerDAO;
+import org.txor.beerapi.repository.ManufacturerDatabaseRepository;
 
 @Configuration
 public class BeerApiConfiguration {
 
     @Autowired
-    ManufacturerDAO manufacturerDAO;
+    ManufacturerDatabaseRepository manufacturerDatabaseRepository;
 
     @Bean
     public BeerService beerService() {
@@ -22,7 +22,7 @@ public class BeerApiConfiguration {
 
     @Bean
     public ManufacturerService manufacturerService() {
-        return new ManufacturerService(manufacturerDAO);
+        return new ManufacturerService(manufacturerDatabaseRepository);
     }
 
     @Bean

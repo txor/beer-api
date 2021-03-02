@@ -1,4 +1,4 @@
-package org.txor.beerapi.domain.dao;
+package org.txor.beerapi.repository;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

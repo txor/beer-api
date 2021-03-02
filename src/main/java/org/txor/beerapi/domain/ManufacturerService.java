@@ -1,20 +1,19 @@
 package org.txor.beerapi.domain;
 
-import org.txor.beerapi.domain.dao.ManufacturerDAO;
 import org.txor.beerapi.domain.model.Manufacturer;
 
 import java.util.List;
 
 public class ManufacturerService {
 
-    private final ManufacturerDAO manufacturerDao;
+    private final ManufacturerRepository manufacturerRepository;
 
-    public ManufacturerService(ManufacturerDAO manufacturerDao) {
-        this.manufacturerDao = manufacturerDao;
+    public ManufacturerService(ManufacturerRepository manufacturerRepository) {
+        this.manufacturerRepository = manufacturerRepository;
     }
 
     public List<String> getAllManufacturerNames() {
-        return manufacturerDao.getAllManufacturerNames();
+        return manufacturerRepository.getAllManufacturerNames();
     }
 
     public void createManufacturer(Manufacturer manufacturer) {
