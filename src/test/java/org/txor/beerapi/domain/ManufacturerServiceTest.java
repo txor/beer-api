@@ -2,6 +2,8 @@ package org.txor.beerapi.domain;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.txor.beerapi.domain.model.Manufacturer;
@@ -9,10 +11,11 @@ import org.txor.beerapi.domain.model.Manufacturer;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.txor.beerapi.TestMother.MANUFACTURER1_NAME;
+import static org.txor.beerapi.TestMother.MANUFACTURER1_NATIONALITY;
 import static org.txor.beerapi.TestMother.MANUFACTURER2_NAME;
 import static org.txor.beerapi.TestMother.allManufacturerNames;
 import static org.txor.beerapi.TestMother.manufacturer1;
@@ -22,6 +25,9 @@ class ManufacturerServiceTest {
 
     @Mock
     ManufacturerRepository repository;
+
+    @Captor
+    private ArgumentCaptor<Manufacturer> manufacturerCaptor;
 
     @Test
     public void getAllManufacturerNames_should_obtain_all_names_from_the_repository() {
@@ -36,12 +42,14 @@ class ManufacturerServiceTest {
     }
 
     @Test
-    public void createManufacturer_should_call_the_repository() {
+    public void createManufacturer_should_call_the_repository_with_the_given_name_and_manufacturer() {
         ManufacturerService manufacturerService = new ManufacturerService(repository);
 
         manufacturerService.createManufacturer(manufacturer1());
 
-        verify(repository).saveManufacturer(any(Manufacturer.class));
+        verify(repository).saveManufacturer(manufacturerCaptor.capture());
+        assertThat(manufacturerCaptor.getValue().getName()).isEqualTo(MANUFACTURER1_NAME);
+        assertThat(manufacturerCaptor.getValue().getNationality()).isEqualTo(MANUFACTURER1_NATIONALITY);
     }
 
     @Test
@@ -50,6 +58,17 @@ class ManufacturerServiceTest {
 
         manufacturerService.getManufacturer(MANUFACTURER1_NAME);
 
-        verify(repository).getManufacturer(MANUFACTURER1_NAME);
+        verify(repository).getManufacturer(eq(MANUFACTURER1_NAME));
+    }
+
+    @Test
+    public void updateManufacturer_should_call_the_repository_with_the_given_name_and_manufacturer() {
+        ManufacturerService manufacturerService = new ManufacturerService(repository);
+
+        manufacturerService.updateManufacturer(MANUFACTURER1_NAME, manufacturer1());
+
+        verify(repository).updateManufacturer(eq(MANUFACTURER1_NAME), manufacturerCaptor.capture());
+        assertThat(manufacturerCaptor.getValue().getName()).isEqualTo(MANUFACTURER1_NAME);
+        assertThat(manufacturerCaptor.getValue().getNationality()).isEqualTo(MANUFACTURER1_NATIONALITY);
     }
 }

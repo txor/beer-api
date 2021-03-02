@@ -14,7 +14,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import org.txor.beerapi.repository.entity.ManufacturerEntity;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -51,7 +53,7 @@ class ManufacturerFeatureTests {
     }
 
     @Test
-    @Sql({"/test_data.sql"})
+    @Sql({"/manufacturer_data.sql"})
     public void list_all_manufacturer_names() throws Exception {
         this.mockMvc.perform(get("/api/manufacturers"))
                 .andExpect(status().isOk())
@@ -83,7 +85,7 @@ class ManufacturerFeatureTests {
     }
 
     @Test
-    @Sql({"/test_data.sql"})
+    @Sql({"/manufacturer_data.sql"})
     public void retrieve_manufacturer_information() throws Exception {
         this.mockMvc.perform(get("/api/manufacturer/{name}", MANUFACTURER1_NAME))
                 .andExpect(status().isOk())
@@ -102,8 +104,9 @@ class ManufacturerFeatureTests {
     }
 
     @Test
+    @Sql({"/minimal_manufacturer_data.sql"})
     public void update_manufacturer_information() throws Exception {
-        this.mockMvc.perform(put("/api/manufacturer/{name}", "some manufacturer")
+        this.mockMvc.perform(put("/api/manufacturer/{name}", MANUFACTURER1_NAME)
                 .content(manufacturer1JsonString())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent())
@@ -111,6 +114,10 @@ class ManufacturerFeatureTests {
                         requestFields(
                                 fieldWithPath("name").description("The name of the manufacturer"),
                                 fieldWithPath("nationality").description("The nationality of the manufacturer"))));
+
+        assertThat(databaseTestClient.findById(MANUFACTURER1_NAME))
+                .map(ManufacturerEntity::getNationality)
+                .hasValue(MANUFACTURER1_NATIONALITY);
     }
 
     @Test

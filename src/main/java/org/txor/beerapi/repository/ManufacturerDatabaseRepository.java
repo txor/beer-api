@@ -37,4 +37,9 @@ public class ManufacturerDatabaseRepository implements ManufacturerRepository {
                 .map(converter::convert)
                 .orElseThrow(() -> new ManufacturerNotFoundException(manufacturerName));
     }
+
+    @Override
+    public void updateManufacturer(String manufacturerName, Manufacturer manufacturer) {
+
+    }
 }

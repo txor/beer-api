@@ -1,0 +1,1 @@
+INSERT INTO manufacturer VALUES ('Grupo Modelo, AB InBev', null), ('Spaten-Franziskaner-Bräu GmbH', null);
