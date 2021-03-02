@@ -17,11 +17,11 @@ public class ManufacturerService {
         return manufacturerDao.getAllManufacturerNames();
     }
 
-    public Manufacturer getManufacturer(String name) {
-        return null;
+    public void createManufacturer(Manufacturer manufacturer) {
     }
 
-    public void createManufacturer(Manufacturer manufacturer) {
+    public Manufacturer getManufacturer(String name) {
+        return null;
     }
 
     public void updateManufacturer(String manufacturer, Manufacturer manufacturerInformation) {

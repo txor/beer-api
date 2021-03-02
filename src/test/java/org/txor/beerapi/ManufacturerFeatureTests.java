@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
@@ -37,6 +38,9 @@ class ManufacturerFeatureTests {
 
     @Autowired
     private WebApplicationContext context;
+
+    @Autowired
+    private ManufacturerDatabaseTestClient databaseTestClient;
 
     private MockMvc mockMvc;
 
@@ -66,6 +70,8 @@ class ManufacturerFeatureTests {
                         requestFields(
                                 fieldWithPath("name").description("The name of the manufacturer"),
                                 fieldWithPath("nationality").description("The nationality of the manufacturer"))));
+
+        assertTrue(databaseTestClient.findById(MANUFACTURER1_NAME).isPresent());
     }
 
     @Test
