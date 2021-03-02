@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.txor.beerapi.domain.exceptions.ManufacturerNotFoundException;
 import org.txor.beerapi.domain.model.Manufacturer;
 import org.txor.beerapi.repository.converters.ManufacturerEntityConverter;
 import org.txor.beerapi.repository.entity.ManufacturerEntity;
@@ -11,6 +12,7 @@ import org.txor.beerapi.repository.entity.ManufacturerEntity;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
@@ -59,5 +61,14 @@ class ManufacturerDatabaseRepositoryTest {
 
         assertThat(manufacturer.getName()).isEqualTo(MANUFACTURER1_NAME);
         assertThat(manufacturer.getNationality()).isEqualTo(MANUFACTURER1_NATIONALITY);
+    }
+
+    @Test
+    void getManufacturer_should_throw_an_exception_when_trying_to_obtain_a_non_existing_manufacturer() {
+        when(dao.findById(anyString())).thenReturn(Optional.empty());
+        ManufacturerDatabaseRepository manufacturerDatabaseRepository = new ManufacturerDatabaseRepository(dao, converter);
+
+        assertThrows(ManufacturerNotFoundException.class,
+                () -> manufacturerDatabaseRepository.getManufacturer(MANUFACTURER1_NAME));
     }
 }
