@@ -8,9 +8,15 @@ import org.txor.beerapi.domain.model.Manufacturer;
 import org.txor.beerapi.repository.converters.ManufacturerEntityConverter;
 import org.txor.beerapi.repository.entity.ManufacturerEntity;
 
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.txor.beerapi.TestMother.MANUFACTURER1_NAME;
+import static org.txor.beerapi.TestMother.MANUFACTURER1_NATIONALITY;
 import static org.txor.beerapi.TestMother.manufacturer1;
 import static org.txor.beerapi.TestMother.manufacturer1Entity;
 
@@ -41,5 +47,17 @@ class ManufacturerDatabaseRepositoryTest {
 
         verify(converter).convert(any(Manufacturer.class));
         verify(dao).save(any(ManufacturerEntity.class));
+    }
+
+    @Test
+    void getManufacturer_should_obtain_the_manufacturer_from_the_dao_and_convert_it_back() {
+        when(dao.findById(anyString())).thenReturn(Optional.of(manufacturer1Entity()));
+        when(converter.convert(any(ManufacturerEntity.class))).thenReturn(manufacturer1());
+        ManufacturerDatabaseRepository manufacturerDatabaseRepository = new ManufacturerDatabaseRepository(dao, converter);
+
+        Manufacturer manufacturer = manufacturerDatabaseRepository.getManufacturer(MANUFACTURER1_NAME);
+
+        assertThat(manufacturer.getName()).isEqualTo(MANUFACTURER1_NAME);
+        assertThat(manufacturer.getNationality()).isEqualTo(MANUFACTURER1_NATIONALITY);
     }
 }

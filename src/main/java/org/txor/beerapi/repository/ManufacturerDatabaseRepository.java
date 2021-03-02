@@ -5,8 +5,10 @@ import org.springframework.stereotype.Component;
 import org.txor.beerapi.domain.ManufacturerRepository;
 import org.txor.beerapi.domain.model.Manufacturer;
 import org.txor.beerapi.repository.converters.ManufacturerEntityConverter;
+import org.txor.beerapi.repository.entity.ManufacturerEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class ManufacturerDatabaseRepository implements ManufacturerRepository {
@@ -32,6 +34,7 @@ public class ManufacturerDatabaseRepository implements ManufacturerRepository {
 
     @Override
     public Manufacturer getManufacturer(String manufacturerName) {
-        return null;
+        Optional<ManufacturerEntity> entity = manufacturerDAO.findById(manufacturerName);
+        return converter.convert(entity.get());
     }
 }

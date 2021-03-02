@@ -10,4 +10,8 @@ public class ManufacturerEntityConverter {
     public ManufacturerEntity convert(Manufacturer manufacturer) {
         return new ManufacturerEntity(manufacturer.getName(), manufacturer.getNationality());
     }
+
+    public Manufacturer convert(ManufacturerEntity manufacturer) {
+        return null;
+    }
 }
