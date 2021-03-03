@@ -74,7 +74,7 @@ class ManufacturerFeatureTests {
                         requestFields(
                                 fieldWithPath("name").description("The name of the manufacturer"),
                                 fieldWithPath("nationality").description("The nationality of the manufacturer"))));
-        assertTrue(databaseTestClient.findById(MANUFACTURER1_NAME).isPresent());
+        assertTrue(databaseTestClient.existsById(MANUFACTURER1_NAME));
     }
 
     @Test
@@ -155,7 +155,7 @@ class ManufacturerFeatureTests {
         this.mockMvc.perform(delete("/api/manufacturer/{name}", MANUFACTURER1_NAME))
                 .andExpect(status().isOk())
                 .andDo(document("manufacturer-delete-example"));
-        assertFalse(databaseTestClient.findById(MANUFACTURER1_NAME).isPresent());
+        assertFalse(databaseTestClient.existsById(MANUFACTURER1_NAME));
     }
 
     @Test
