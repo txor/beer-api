@@ -38,6 +38,11 @@ public class ManufacturerService {
         }
     }
 
-    public void deleteManufacturer(String manufacturer) {
+    public void deleteManufacturer(String name) {
+        manufacturerRepository.deleteManufacturer(
+                manufacturerRepository.getManufacturer(name)
+                        .orElseThrow(() -> new ManufacturerNotFoundException(name))
+                        .getName()
+        );
     }
 }

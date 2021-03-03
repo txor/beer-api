@@ -35,4 +35,9 @@ public class ManufacturerDatabaseRepository implements ManufacturerRepository {
     public Optional<Manufacturer> getManufacturer(String manufacturerName) {
         return manufacturerDAO.findById(manufacturerName).map(converter::convert);
     }
+
+    @Override
+    public void deleteManufacturer(String name) {
+        manufacturerDAO.deleteById(name);
+    }
 }

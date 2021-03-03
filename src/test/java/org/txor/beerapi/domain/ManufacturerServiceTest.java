@@ -115,11 +115,11 @@ class ManufacturerServiceTest {
 
     @Test
     public void deleteManufacturer_should_delete_an_existing_manufacturer() {
+        when(repository.findById(anyString())).thenReturn(Optional.of(manufacturer1Entity()));
+
         manufacturerService.deleteManufacturer(MANUFACTURER1_NAME);
 
-        verify(repository).delete(manufacturerCaptor.capture());
-        assertThat(manufacturerCaptor.getValue().getName()).isEqualTo(MANUFACTURER1_NAME);
-        assertThat(manufacturerCaptor.getValue().getNationality()).isEqualTo(MANUFACTURER1_NATIONALITY);
+        verify(repository).deleteById(MANUFACTURER1_NAME);
     }
 
     @Test
