@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.txor.beerapi.domain.exceptions.BadManufacturerDataException;
 import org.txor.beerapi.domain.exceptions.ManufacturerNotFoundException;
 
 @ControllerAdvice
@@ -14,6 +15,13 @@ public class ManufacturerControllerExceptionHandler {
     @ExceptionHandler(ManufacturerNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String manufacturerNotFoundHandler(ManufacturerNotFoundException ex) {
+        return ex.getMessage();
+    }
+
+    @ResponseBody
+    @ExceptionHandler(BadManufacturerDataException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String badManufacturerDataHandler(BadManufacturerDataException ex) {
         return ex.getMessage();
     }
 }

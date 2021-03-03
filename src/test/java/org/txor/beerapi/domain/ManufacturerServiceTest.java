@@ -7,6 +7,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.txor.beerapi.domain.exceptions.BadManufacturerDataException;
 import org.txor.beerapi.domain.exceptions.ManufacturerNotFoundException;
 import org.txor.beerapi.domain.model.Manufacturer;
 import org.txor.beerapi.repository.ManufacturerDAO;
@@ -86,7 +87,8 @@ class ManufacturerServiceTest {
     }
 
     @Test
-    public void updateManufacturer_should_persist_the_given_manufacturer_data() {
+    public void updateManufacturer_should_update_an_existing_manufacturer_with_the_given_data() {
+        when(repository.findById(anyString())).thenReturn(Optional.of(manufacturer1Entity()));
         manufacturerService.updateManufacturer(MANUFACTURER1_NAME, manufacturer1());
 
         verify(repository).save(manufacturerCaptor.capture());
@@ -95,12 +97,19 @@ class ManufacturerServiceTest {
     }
 
     @Test
-    public void updateManufacturer_should_throw_an_exception_when_asked_to_persist_the_manufacturer_data_on_an_existing_manufacturer() {
+    public void updateManufacturer_should_throw_an_exception_when_asked_to_update_a_non_existing_manufacturer() {
+        String manufacturer = "non existing manufacturer";
+        when(repository.findById(anyString())).thenReturn(Optional.empty());
 
+        assertThrows(ManufacturerNotFoundException.class,
+                () -> manufacturerService.updateManufacturer(manufacturer, new Manufacturer(manufacturer, "anywhere"))
+        );
     }
 
     @Test
     public void updateManufacturer_should_throw_an_exception_when_asked_to_persist_the_manufacturer_data_on_a_different_manufacturer_name() {
-
+        assertThrows(BadManufacturerDataException.class,
+                () -> manufacturerService.updateManufacturer("random manufacturer name", manufacturer1())
+        );
     }
 }

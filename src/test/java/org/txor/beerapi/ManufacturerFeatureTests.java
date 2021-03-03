@@ -130,13 +130,22 @@ class ManufacturerFeatureTests {
 
     @Test
     public void not_update_non_existing_manufacturer() throws Exception {
-        String nonExistingManufacturer = "non existing manufacturer";
-
-        this.mockMvc.perform(put("/api/manufacturer/{name}/", nonExistingManufacturer)
+        this.mockMvc.perform(put("/api/manufacturer/{name}/", MANUFACTURER1_NAME)
                 .content(manufacturer1JsonString())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
-                .andExpect(result -> assertEquals(nonExistingManufacturer + " not found", result.getResponse().getContentAsString()));
+                .andExpect(result -> assertEquals(MANUFACTURER1_NAME + " not found", result.getResponse().getContentAsString()));
+    }
+
+    @Test
+    public void not_update_non_matching_manufacturer_data() throws Exception {
+        String randomManufacturerName = "random manufacturer name";
+
+        this.mockMvc.perform(put("/api/manufacturer/{name}/", randomManufacturerName)
+                .content(manufacturer1JsonString())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(result -> assertEquals(randomManufacturerName + " does not match", result.getResponse().getContentAsString()));
     }
 
     @Test

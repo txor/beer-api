@@ -12,6 +12,4 @@ public interface ManufacturerRepository {
     void saveManufacturer(Manufacturer manufacturer);
 
     Optional<Manufacturer> getManufacturer(String manufacturerName);
-
-    void updateManufacturer(Manufacturer manufacturer);
 }
