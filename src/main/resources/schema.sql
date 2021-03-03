@@ -1,9 +1,9 @@
-CREATE TABLE manufacturer (
+CREATE TABLE IF NOT EXISTS manufacturer (
     name VARCHAR(128),
     nationality VARCHAR(128),
     PRIMARY KEY (name)
 );
-CREATE TABLE beer (
+CREATE TABLE IF NOT EXISTS beer (
     name VARCHAR(128),
     graduation FLOAT,
     type VARCHAR(128),
