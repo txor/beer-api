@@ -112,4 +112,22 @@ class ManufacturerServiceTest {
                 () -> manufacturerService.updateManufacturer("random manufacturer name", manufacturer1())
         );
     }
+
+    @Test
+    public void deleteManufacturer_should_delete_an_existing_manufacturer() {
+        manufacturerService.deleteManufacturer(MANUFACTURER1_NAME);
+
+        verify(repository).delete(manufacturerCaptor.capture());
+        assertThat(manufacturerCaptor.getValue().getName()).isEqualTo(MANUFACTURER1_NAME);
+        assertThat(manufacturerCaptor.getValue().getNationality()).isEqualTo(MANUFACTURER1_NATIONALITY);
+    }
+
+    @Test
+    public void deleteManufacturer_throw_exception_when_asked_to_delete_a_non_existing_manufacturer() {
+        when(repository.findById(MANUFACTURER1_NAME)).thenReturn(Optional.empty());
+
+        assertThrows(ManufacturerNotFoundException.class,
+                () -> manufacturerService.deleteManufacturer(MANUFACTURER1_NAME)
+        );
+    }
 }

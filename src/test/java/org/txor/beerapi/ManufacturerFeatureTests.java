@@ -18,6 +18,7 @@ import org.txor.beerapi.repository.entity.ManufacturerEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
@@ -149,18 +150,19 @@ class ManufacturerFeatureTests {
     }
 
     @Test
+    @Sql({"/manufacturer_data.sql"})
     public void delete_manufacturer() throws Exception {
         this.mockMvc.perform(delete("/api/manufacturer/{name}", MANUFACTURER1_NAME))
                 .andExpect(status().isOk())
                 .andDo(document("manufacturer-delete-example"));
+
+        assertFalse(databaseTestClient.findById(MANUFACTURER1_NAME).isPresent());
     }
 
     @Test
     public void not_delete_non_existing_manufacturer() throws Exception {
-        String nonExistingManufacturer = "non existing manufacturer";
-
         this.mockMvc.perform(delete("/api/manufacturer/{name}", MANUFACTURER1_NAME))
                 .andExpect(status().isNotFound())
-                .andExpect(result -> assertEquals(nonExistingManufacturer + " not found", result.getResponse().getContentAsString()));
+                .andExpect(result -> assertEquals(MANUFACTURER1_NAME + " not found", result.getResponse().getContentAsString()));
     }
 }
