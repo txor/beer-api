@@ -1,5 +1,6 @@
 package org.txor.beerapi.domain;
 
+import org.txor.beerapi.domain.exceptions.ManufacturerNotFoundException;
 import org.txor.beerapi.domain.model.Manufacturer;
 
 import java.util.List;
@@ -21,10 +22,12 @@ public class ManufacturerService {
     }
 
     public Manufacturer getManufacturer(String name) {
-        return manufacturerRepository.getManufacturer(name);
+        return manufacturerRepository.getManufacturer(name)
+                .orElseThrow(() -> new ManufacturerNotFoundException(name));
     }
 
     public void updateManufacturer(String name, Manufacturer manufacturer) {
+
         manufacturerRepository.updateManufacturer(name, manufacturer);
     }
 

@@ -3,11 +3,11 @@ package org.txor.beerapi.repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.txor.beerapi.domain.ManufacturerRepository;
-import org.txor.beerapi.domain.exceptions.ManufacturerNotFoundException;
 import org.txor.beerapi.domain.model.Manufacturer;
 import org.txor.beerapi.repository.converters.ManufacturerEntityConverter;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class ManufacturerDatabaseRepository implements ManufacturerRepository {
@@ -32,10 +32,8 @@ public class ManufacturerDatabaseRepository implements ManufacturerRepository {
     }
 
     @Override
-    public Manufacturer getManufacturer(String manufacturerName) {
-        return manufacturerDAO.findById(manufacturerName)
-                .map(converter::convert)
-                .orElseThrow(() -> new ManufacturerNotFoundException(manufacturerName));
+    public Optional<Manufacturer> getManufacturer(String manufacturerName) {
+        return manufacturerDAO.findById(manufacturerName).map(converter::convert);
     }
 
     @Override

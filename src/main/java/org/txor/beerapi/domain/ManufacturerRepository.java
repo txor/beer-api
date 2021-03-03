@@ -3,6 +3,7 @@ package org.txor.beerapi.domain;
 import org.txor.beerapi.domain.model.Manufacturer;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ManufacturerRepository {
 
@@ -10,7 +11,7 @@ public interface ManufacturerRepository {
 
     void saveManufacturer(Manufacturer manufacturer);
 
-    Manufacturer getManufacturer(String manufacturerName);
+    Optional<Manufacturer> getManufacturer(String manufacturerName);
 
     void updateManufacturer(String manufacturerName, Manufacturer manufacturer);
 }
