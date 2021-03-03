@@ -14,4 +14,6 @@ public interface ManufacturerRepository {
     Optional<Manufacturer> getManufacturer(String manufacturerName);
 
     void deleteManufacturer(String name);
+
+    boolean existsManufacturer(String name);
 }

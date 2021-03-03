@@ -88,7 +88,7 @@ class ManufacturerServiceTest {
 
     @Test
     public void updateManufacturer_should_update_an_existing_manufacturer_with_the_given_data() {
-        when(repository.findById(anyString())).thenReturn(Optional.of(manufacturer1Entity()));
+        when(repository.existsById(anyString())).thenReturn(true);
         manufacturerService.updateManufacturer(MANUFACTURER1_NAME, manufacturer1());
 
         verify(repository).save(manufacturerCaptor.capture());
@@ -99,7 +99,7 @@ class ManufacturerServiceTest {
     @Test
     public void updateManufacturer_should_throw_an_exception_when_asked_to_update_a_non_existing_manufacturer() {
         String manufacturer = "non existing manufacturer";
-        when(repository.findById(anyString())).thenReturn(Optional.empty());
+        when(repository.existsById(anyString())).thenReturn(false);
 
         assertThrows(ManufacturerNotFoundException.class,
                 () -> manufacturerService.updateManufacturer(manufacturer, new Manufacturer(manufacturer, "anywhere"))
@@ -115,7 +115,7 @@ class ManufacturerServiceTest {
 
     @Test
     public void deleteManufacturer_should_delete_an_existing_manufacturer() {
-        when(repository.findById(anyString())).thenReturn(Optional.of(manufacturer1Entity()));
+        when(repository.existsById(anyString())).thenReturn(true);
 
         manufacturerService.deleteManufacturer(MANUFACTURER1_NAME);
 
@@ -124,7 +124,7 @@ class ManufacturerServiceTest {
 
     @Test
     public void deleteManufacturer_throw_exception_when_asked_to_delete_a_non_existing_manufacturer() {
-        when(repository.findById(MANUFACTURER1_NAME)).thenReturn(Optional.empty());
+        when(repository.existsById(MANUFACTURER1_NAME)).thenReturn(false);
 
         assertThrows(ManufacturerNotFoundException.class,
                 () -> manufacturerService.deleteManufacturer(MANUFACTURER1_NAME)

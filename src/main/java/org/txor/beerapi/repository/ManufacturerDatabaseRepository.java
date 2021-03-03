@@ -40,4 +40,9 @@ public class ManufacturerDatabaseRepository implements ManufacturerRepository {
     public void deleteManufacturer(String name) {
         manufacturerDAO.deleteById(name);
     }
+
+    @Override
+    public boolean existsManufacturer(String name) {
+        return manufacturerDAO.existsById(name);
+    }
 }

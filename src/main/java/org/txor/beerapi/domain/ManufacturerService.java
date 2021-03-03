@@ -31,18 +31,16 @@ public class ManufacturerService {
         if (!name.equalsIgnoreCase(manufacturer.getName())) {
             throw new BadManufacturerDataException(name);
         }
-        if (manufacturerRepository.getManufacturer(name).isPresent()) {
-            manufacturerRepository.saveManufacturer(manufacturer);
-        } else {
+        if (!manufacturerRepository.existsManufacturer(name)) {
             throw new ManufacturerNotFoundException(name);
         }
+        manufacturerRepository.saveManufacturer(manufacturer);
     }
 
     public void deleteManufacturer(String name) {
-        manufacturerRepository.deleteManufacturer(
-                manufacturerRepository.getManufacturer(name)
-                        .orElseThrow(() -> new ManufacturerNotFoundException(name))
-                        .getName()
-        );
+        if (!manufacturerRepository.existsManufacturer(name)) {
+            throw new ManufacturerNotFoundException(name);
+        }
+        manufacturerRepository.deleteManufacturer(name);
     }
 }
