@@ -95,7 +95,12 @@ class ManufacturerServiceTest {
     }
 
     @Test
-    public void updateManufacturer_should_throw_an_exception_when_asked_to_persist_the_manufacturer_data_on_a_different_manufacturer() {
+    public void updateManufacturer_should_throw_an_exception_when_asked_to_persist_the_manufacturer_data_on_an_existing_manufacturer() {
+
+    }
+
+    @Test
+    public void updateManufacturer_should_throw_an_exception_when_asked_to_persist_the_manufacturer_data_on_a_different_manufacturer_name() {
 
     }
 }

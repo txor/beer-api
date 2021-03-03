@@ -37,7 +37,7 @@ public class ManufacturerDatabaseRepository implements ManufacturerRepository {
     }
 
     @Override
-    public void updateManufacturer(String manufacturerName, Manufacturer manufacturer) {
-
+    public void updateManufacturer(Manufacturer manufacturer) {
+        manufacturerDAO.save(converter.convert(manufacturer));
     }
 }

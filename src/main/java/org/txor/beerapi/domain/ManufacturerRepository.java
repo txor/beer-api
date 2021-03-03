@@ -13,5 +13,5 @@ public interface ManufacturerRepository {
 
     Optional<Manufacturer> getManufacturer(String manufacturerName);
 
-    void updateManufacturer(String manufacturerName, Manufacturer manufacturer);
+    void updateManufacturer(Manufacturer manufacturer);
 }

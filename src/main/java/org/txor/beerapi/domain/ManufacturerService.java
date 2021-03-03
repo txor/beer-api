@@ -27,8 +27,7 @@ public class ManufacturerService {
     }
 
     public void updateManufacturer(String name, Manufacturer manufacturer) {
-
-        manufacturerRepository.updateManufacturer(name, manufacturer);
+        manufacturerRepository.updateManufacturer(manufacturer);
     }
 
     public void deleteManufacturer(String manufacturer) {
