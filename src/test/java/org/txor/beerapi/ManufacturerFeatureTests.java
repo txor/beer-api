@@ -54,7 +54,7 @@ class ManufacturerFeatureTests {
     }
 
     @Test
-    @Sql({"/wipe_manufacturer_data.sql", "/manufacturer_data.sql"})
+    @Sql({"/delete_manufacturer_data.sql", "/insert_manufacturer_data.sql"})
     public void list_all_manufacturer_names() throws Exception {
         this.mockMvc.perform(get("/api/manufacturers"))
                 .andExpect(status().isOk())
@@ -64,7 +64,7 @@ class ManufacturerFeatureTests {
     }
 
     @Test
-    @Sql("/wipe_manufacturer_data.sql")
+    @Sql("/delete_manufacturer_data.sql")
     public void create_manufacturer() throws Exception {
         this.mockMvc.perform(post("/api/manufacturer")
                 .content(manufacturer1JsonString())
@@ -86,7 +86,7 @@ class ManufacturerFeatureTests {
     }
 
     @Test
-    @Sql({"/wipe_manufacturer_data.sql", "/manufacturer_data.sql"})
+    @Sql({"/delete_manufacturer_data.sql", "/insert_manufacturer_data.sql"})
     public void retrieve_manufacturer_information() throws Exception {
         this.mockMvc.perform(get("/api/manufacturer/{name}", MANUFACTURER1_NAME))
                 .andExpect(status().isOk())
@@ -105,7 +105,7 @@ class ManufacturerFeatureTests {
     }
 
     @Test
-    @Sql({"/wipe_manufacturer_data.sql", "/minimal_manufacturer_data.sql"})
+    @Sql({"/delete_manufacturer_data.sql", "/insert_minimal_manufacturer_data.sql"})
     public void update_manufacturer_information() throws Exception {
         this.mockMvc.perform(put("/api/manufacturer/{name}", MANUFACTURER1_NAME)
                 .content(manufacturer1JsonString())
@@ -129,7 +129,7 @@ class ManufacturerFeatureTests {
     }
 
     @Test
-    @Sql("/wipe_manufacturer_data.sql")
+    @Sql("/delete_manufacturer_data.sql")
     public void not_update_non_existing_manufacturer() throws Exception {
         this.mockMvc.perform(put("/api/manufacturer/{name}/", MANUFACTURER1_NAME)
                 .content(manufacturer1JsonString())
@@ -150,7 +150,7 @@ class ManufacturerFeatureTests {
     }
 
     @Test
-    @Sql({"/wipe_manufacturer_data.sql", "/manufacturer_data.sql"})
+    @Sql({"/delete_manufacturer_data.sql", "/insert_manufacturer_data.sql"})
     public void delete_manufacturer() throws Exception {
         this.mockMvc.perform(delete("/api/manufacturer/{name}", MANUFACTURER1_NAME))
                 .andExpect(status().isOk())
@@ -159,7 +159,7 @@ class ManufacturerFeatureTests {
     }
 
     @Test
-    @Sql("/wipe_manufacturer_data.sql")
+    @Sql("/delete_manufacturer_data.sql")
     public void not_delete_non_existing_manufacturer() throws Exception {
         this.mockMvc.perform(delete("/api/manufacturer/{name}", MANUFACTURER1_NAME))
                 .andExpect(status().isNotFound())

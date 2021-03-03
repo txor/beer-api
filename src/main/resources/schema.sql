@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS beer (
     name VARCHAR(128),
     graduation FLOAT,
     type VARCHAR(128),
-    description VARCHAR(128),
+    description VARCHAR(1024),
     manufacturer VARCHAR(128) NULL,
     PRIMARY KEY (name),
     FOREIGN KEY (manufacturer) REFERENCES manufacturer(name)
