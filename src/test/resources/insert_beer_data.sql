@@ -1,3 +1,6 @@
 INSERT INTO beer VALUES
 ('Coronita', 4.5, 'Pale Lager', 'Extra Coronita Mexican Beer is an even-keeled import beer with fruity-honey aromas and a touch of malt.', 'Grupo Modelo, AB InBev'),
-('Franziskaner', 5, 'Wheat Beer', 'Smells of doughy malt and estery fruit and spice, with notes of banana and clove, as well as lighter, herbal hops. Taste follows the nose, with a decent balance of doughy malt, estery fruit and spice, with distinct banana and clove notes and lighter grassy and herbal hops.', 'Spaten-Franziskaner-Bräu GmbH');
+('Franziskaner', 5, 'Wheat Beer', 'Smells of doughy malt and estery fruit and spice, with notes of banana and clove, as well as lighter, herbal hops. Taste follows the nose, with a decent balance of doughy malt, estery fruit and spice, with distinct banana and clove notes and lighter grassy and herbal hops.', 'Spaten-Franziskaner-Bräu GmbH'),
+('Estrella', 5.4, 'Lager Beer', 'Estrella Damm is a lager beer, brewed in Barcelona, Spain. It has existed since 1876, when August Küntzmann Damm founded his brewery in Barcelona, and is the flagship beer of S.A. Damm', 'S.A. Damm'),
+('A.K.Damm', 4.8, 'Alsatian', 'A flavoursome, full-bodied beer with an elegant appearance, A.K.Damm comes in a unique, premium bottle.', 'S.A. Damm'),
+('Voll Damm', 7.2, 'Märzenbier', 'This robust, full-bodied beer emulates a German-style Vollbier and contains 7.2% alcohol by volume. Its dark-green colored labels display writing in the Gothic script.', 'S.A. Damm');

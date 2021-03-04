@@ -26,6 +26,7 @@ import static org.mockito.Mockito.when;
 import static org.txor.beerapi.testutils.TestMother.MANUFACTURER1_NAME;
 import static org.txor.beerapi.testutils.TestMother.MANUFACTURER1_NATIONALITY;
 import static org.txor.beerapi.testutils.TestMother.MANUFACTURER2_NAME;
+import static org.txor.beerapi.testutils.TestMother.MANUFACTURER3_NAME;
 import static org.txor.beerapi.testutils.TestMother.allManufacturerNames;
 import static org.txor.beerapi.testutils.TestMother.manufacturer1;
 import static org.txor.beerapi.testutils.TestMother.manufacturer1Entity;
@@ -54,9 +55,10 @@ class ManufacturerServiceTest {
 
         List<String> names = manufacturerService.getAllManufacturerNames();
 
-        assertThat(names.size()).isEqualTo(2);
+        assertThat(names.size()).isEqualTo(3);
         assertThat(names.get(0)).isEqualTo(MANUFACTURER1_NAME);
         assertThat(names.get(1)).isEqualTo(MANUFACTURER2_NAME);
+        assertThat(names.get(2)).isEqualTo(MANUFACTURER3_NAME);
     }
 
     @Test

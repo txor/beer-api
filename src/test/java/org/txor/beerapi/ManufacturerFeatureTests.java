@@ -33,7 +33,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.txor.beerapi.testutils.TestMother.MANUFACTURER1_NAME;
 import static org.txor.beerapi.testutils.TestMother.MANUFACTURER1_NATIONALITY;
-import static org.txor.beerapi.testutils.TestMother.MANUFACTURER2_NAME;
 import static org.txor.beerapi.testutils.TestMother.manufacturer1JsonString;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -55,17 +54,7 @@ class ManufacturerFeatureTests {
     }
 
     @Test
-    @Sql({"/delete_manufacturer_data.sql", "/insert_manufacturer_data.sql"})
-    public void list_all_manufacturer_names() throws Exception {
-        this.mockMvc.perform(get("/api/manufacturers"))
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0]").value(MANUFACTURER1_NAME))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1]").value(MANUFACTURER2_NAME))
-                .andDo(document("manufacturer-list-example", responseBody()));
-    }
-
-    @Test
-    @Sql("/delete_manufacturer_data.sql")
+    @Sql({"/delete_beer_data.sql", "/delete_manufacturer_data.sql"})
     public void create_manufacturer() throws Exception {
         this.mockMvc.perform(post("/api/manufacturer")
                 .content(manufacturer1JsonString())
@@ -87,7 +76,7 @@ class ManufacturerFeatureTests {
     }
 
     @Test
-    @Sql({"/delete_manufacturer_data.sql", "/insert_manufacturer_data.sql"})
+    @Sql({"/delete_beer_data.sql", "/delete_manufacturer_data.sql", "/insert_manufacturer_data.sql"})
     public void retrieve_manufacturer_information() throws Exception {
         this.mockMvc.perform(get("/api/manufacturer/{name}", MANUFACTURER1_NAME))
                 .andExpect(status().isOk())
@@ -106,7 +95,7 @@ class ManufacturerFeatureTests {
     }
 
     @Test
-    @Sql({"/delete_manufacturer_data.sql", "/insert_minimal_manufacturer_data.sql"})
+    @Sql({"/delete_beer_data.sql", "/delete_manufacturer_data.sql", "/insert_minimal_manufacturer_data.sql"})
     public void update_manufacturer_information() throws Exception {
         this.mockMvc.perform(put("/api/manufacturer/{name}", MANUFACTURER1_NAME)
                 .content(manufacturer1JsonString())
@@ -130,7 +119,7 @@ class ManufacturerFeatureTests {
     }
 
     @Test
-    @Sql("/delete_manufacturer_data.sql")
+    @Sql({"/delete_beer_data.sql", "/delete_manufacturer_data.sql"})
     public void not_update_non_existing_manufacturer() throws Exception {
         this.mockMvc.perform(put("/api/manufacturer/{name}/", MANUFACTURER1_NAME)
                 .content(manufacturer1JsonString())
@@ -151,7 +140,7 @@ class ManufacturerFeatureTests {
     }
 
     @Test
-    @Sql({"/delete_manufacturer_data.sql", "/insert_manufacturer_data.sql"})
+    @Sql({"/delete_beer_data.sql", "/delete_manufacturer_data.sql", "/insert_manufacturer_data.sql"})
     public void delete_manufacturer() throws Exception {
         this.mockMvc.perform(delete("/api/manufacturer/{name}", MANUFACTURER1_NAME))
                 .andExpect(status().isOk())
@@ -160,7 +149,7 @@ class ManufacturerFeatureTests {
     }
 
     @Test
-    @Sql("/delete_manufacturer_data.sql")
+    @Sql({"/delete_beer_data.sql", "/delete_manufacturer_data.sql"})
     public void not_delete_non_existing_manufacturer() throws Exception {
         this.mockMvc.perform(delete("/api/manufacturer/{name}", MANUFACTURER1_NAME))
                 .andExpect(status().isNotFound())

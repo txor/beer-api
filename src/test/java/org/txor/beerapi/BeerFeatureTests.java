@@ -37,7 +37,6 @@ import static org.txor.beerapi.testutils.TestMother.BEER1_DESCRIPTION;
 import static org.txor.beerapi.testutils.TestMother.BEER1_GRADUATION;
 import static org.txor.beerapi.testutils.TestMother.BEER1_NAME;
 import static org.txor.beerapi.testutils.TestMother.BEER1_TYPE;
-import static org.txor.beerapi.testutils.TestMother.BEER2_NAME;
 import static org.txor.beerapi.testutils.TestMother.MANUFACTURER1_NAME;
 import static org.txor.beerapi.testutils.TestMother.beer1JsonString;
 
@@ -57,16 +56,6 @@ class BeerFeatureTests {
     public void setUp(RestDocumentationContextProvider restDocumentation) {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context)
                 .apply(documentationConfiguration(restDocumentation)).build();
-    }
-
-    @Test
-    @Sql({"/delete_beer_data.sql", "/insert_beer_data.sql"})
-    public void list_all_beers() throws Exception {
-        this.mockMvc.perform(get("/api/beers"))
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0]").value(BEER1_NAME))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1]").value(BEER2_NAME))
-                .andDo(document("beer-list-example", responseBody()));
     }
 
     @Test

@@ -28,6 +28,9 @@ import static org.txor.beerapi.testutils.TestMother.BEER1_GRADUATION;
 import static org.txor.beerapi.testutils.TestMother.BEER1_NAME;
 import static org.txor.beerapi.testutils.TestMother.BEER1_TYPE;
 import static org.txor.beerapi.testutils.TestMother.BEER2_NAME;
+import static org.txor.beerapi.testutils.TestMother.BEER3_NAME;
+import static org.txor.beerapi.testutils.TestMother.BEER4_NAME;
+import static org.txor.beerapi.testutils.TestMother.BEER5_NAME;
 import static org.txor.beerapi.testutils.TestMother.MANUFACTURER1_NAME;
 import static org.txor.beerapi.testutils.TestMother.allBeerNames;
 import static org.txor.beerapi.testutils.TestMother.beer1;
@@ -57,9 +60,12 @@ class BeerServiceTest {
 
         List<String> names = beerService.getAllBeerNames();
 
-        assertThat(names.size()).isEqualTo(2);
+        assertThat(names.size()).isEqualTo(5);
         assertThat(names.get(0)).isEqualTo(BEER1_NAME);
         assertThat(names.get(1)).isEqualTo(BEER2_NAME);
+        assertThat(names.get(2)).isEqualTo(BEER3_NAME);
+        assertThat(names.get(3)).isEqualTo(BEER4_NAME);
+        assertThat(names.get(4)).isEqualTo(BEER5_NAME);
     }
 
     @Test
