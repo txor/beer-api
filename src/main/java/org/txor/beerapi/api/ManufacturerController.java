@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.txor.beerapi.api.converters.ManufacturerConverter;
 import org.txor.beerapi.api.dto.ManufacturerDTO;
 import org.txor.beerapi.domain.ManufacturerService;
+import org.txor.beerapi.domain.model.Sort;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -28,8 +30,11 @@ public class ManufacturerController {
     ManufacturerConverter manufacturerConverter;
 
     @GetMapping("/api/manufacturers")
-    public List<String> getAllManufacturerNames() {
-        return manufacturerService.getAllManufacturerNames();
+    public List<String> getAllManufacturerNames(
+            @RequestParam(defaultValue = "name") String sort,
+            @RequestParam(defaultValue = "asc") String order
+    ) {
+        return manufacturerService.getAllManufacturerNames(new Sort(sort, order));
     }
 
     @PostMapping("/api/manufacturer")

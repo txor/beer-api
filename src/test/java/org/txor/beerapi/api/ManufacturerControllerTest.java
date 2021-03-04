@@ -26,8 +26,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.txor.beerapi.testutils.TestMother.MANUFACTURER1_NAME;
 import static org.txor.beerapi.testutils.TestMother.MANUFACTURER1_NATIONALITY;
-import static org.txor.beerapi.testutils.TestMother.MANUFACTURER2_NAME;
-import static org.txor.beerapi.testutils.TestMother.allManufacturerNames;
 import static org.txor.beerapi.testutils.TestMother.manufacturer1;
 import static org.txor.beerapi.testutils.TestMother.manufacturer1Dto;
 
@@ -51,18 +49,6 @@ class ManufacturerControllerTest {
 
     @Captor
     ArgumentCaptor<String> manufacturerNameCaptor;
-
-    @Test
-    public void getAllManufacturerNames_should_call_the_domain_collaborator() throws Exception {
-        when(manufacturerService.getAllManufacturerNames()).thenReturn(allManufacturerNames());
-
-        this.mockMvc.perform(get("/api/manufacturers"))
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0]").value(MANUFACTURER1_NAME))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1]").value(MANUFACTURER2_NAME));
-
-        verify(manufacturerService).getAllManufacturerNames();
-    }
 
     @Test
     public void createManufacturer_should_convert_the_data_and_call_the_domain_collaborator() throws Exception {

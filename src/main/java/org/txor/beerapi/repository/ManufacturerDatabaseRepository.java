@@ -1,13 +1,16 @@
 package org.txor.beerapi.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.txor.beerapi.domain.ManufacturerRepository;
 import org.txor.beerapi.domain.model.Manufacturer;
 import org.txor.beerapi.repository.converters.ManufacturerEntityConverter;
+import org.txor.beerapi.repository.entity.ManufacturerEntity;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class ManufacturerDatabaseRepository implements ManufacturerRepository {
@@ -22,8 +25,15 @@ public class ManufacturerDatabaseRepository implements ManufacturerRepository {
     }
 
     @Override
-    public List<String> getAllManufacturerNames() {
-        return manufacturerDAO.getAllManufacturerNames();
+    public List<String> getAllManufacturerNames(org.txor.beerapi.domain.model.Sort sort) {
+        Sort sortBy;
+        if ("desc".equalsIgnoreCase(sort.getOrder())) {
+            sortBy = Sort.by(Sort.Direction.DESC, sort.getSort());
+        } else {
+            sortBy = Sort.by(Sort.Direction.ASC, sort.getSort());
+        }
+        return manufacturerDAO.findAll(sortBy).stream()
+                .map(ManufacturerEntity::getName).collect(Collectors.toList());
     }
 
     @Override

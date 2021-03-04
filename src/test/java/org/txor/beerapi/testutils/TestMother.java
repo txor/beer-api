@@ -51,6 +51,16 @@ public class TestMother {
         return Arrays.asList(BEER1_NAME, BEER2_NAME, BEER3_NAME, BEER4_NAME, BEER5_NAME);
     }
 
+    public static List<BeerEntity> allBeerEntities() {
+        return Arrays.asList(
+                new BeerEntity(BEER1_NAME, BEER1_GRADUATION, BEER1_TYPE, BEER1_DESCRIPTION, manufacturer3Entity()),
+                new BeerEntity(BEER2_NAME, BEER2_GRADUATION, BEER2_TYPE, BEER2_DESCRIPTION, manufacturer2Entity()),
+                new BeerEntity(BEER3_NAME, BEER3_GRADUATION, BEER3_TYPE, BEER3_DESCRIPTION, manufacturer3Entity()),
+                new BeerEntity(BEER4_NAME, BEER4_GRADUATION, BEER4_TYPE, BEER4_DESCRIPTION, manufacturer1Entity()),
+                new BeerEntity(BEER5_NAME, BEER5_GRADUATION, BEER5_TYPE, BEER5_DESCRIPTION, manufacturer3Entity())
+        );
+    }
+
     public static Beer beer1() {
         return new Beer(BEER1_NAME, BEER1_GRADUATION, BEER1_TYPE, BEER1_DESCRIPTION, MANUFACTURER1_NAME);
     }
@@ -72,16 +82,11 @@ public class TestMother {
                 "\"}";
     }
 
-    public static Beer beer2() {
-        return new Beer(BEER2_NAME, BEER2_GRADUATION, BEER2_TYPE, BEER2_DESCRIPTION, MANUFACTURER2_NAME);
-    }
-
-    public static BeerDTO beer2Dto() {
-        return new BeerDTO(BEER2_NAME, BEER2_GRADUATION, BEER2_TYPE, BEER2_DESCRIPTION, MANUFACTURER2_NAME);
-    }
-
-    public static List<String> allManufacturerNames() {
-        return Arrays.asList(MANUFACTURER1_NAME, MANUFACTURER2_NAME, MANUFACTURER3_NAME);
+    public static List<ManufacturerEntity> allManufacturerEntities() {
+        return Arrays.asList(
+                new ManufacturerEntity(MANUFACTURER1_NAME, MANUFACTURER1_NATIONALITY),
+                new ManufacturerEntity(MANUFACTURER2_NAME, MANUFACTURER2_NATIONALITY),
+                new ManufacturerEntity(MANUFACTURER3_NAME, MANUFACTURER3_NATIONALITY));
     }
 
     public static Manufacturer manufacturer1() {
@@ -101,11 +106,11 @@ public class TestMother {
         return "{\"name\": \"" + MANUFACTURER1_NAME + "\", \"nationality\":\"" + MANUFACTURER1_NATIONALITY + "\"}";
     }
 
-    public static Manufacturer manufacturer2() {
-        return new Manufacturer(MANUFACTURER2_NAME, MANUFACTURER2_NATIONALITY);
+    public static ManufacturerEntity manufacturer2Entity() {
+        return new ManufacturerEntity(MANUFACTURER2_NAME, MANUFACTURER2_NATIONALITY);
     }
 
-    public static ManufacturerDTO manufacturer2Dto() {
-        return new ManufacturerDTO(MANUFACTURER2_NAME, MANUFACTURER2_NATIONALITY);
+    public static ManufacturerEntity manufacturer3Entity() {
+        return new ManufacturerEntity(MANUFACTURER3_NAME, MANUFACTURER3_NATIONALITY);
     }
 }

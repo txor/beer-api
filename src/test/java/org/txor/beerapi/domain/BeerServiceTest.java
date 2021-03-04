@@ -10,6 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.txor.beerapi.domain.exceptions.BadResourceDataException;
 import org.txor.beerapi.domain.exceptions.ResourceNotFoundException;
 import org.txor.beerapi.domain.model.Beer;
+import org.txor.beerapi.domain.model.Sort;
 import org.txor.beerapi.repository.BeerDAO;
 import org.txor.beerapi.repository.BeerDatabaseRepository;
 import org.txor.beerapi.repository.converters.BeerEntityConverter;
@@ -20,6 +21,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -32,6 +34,7 @@ import static org.txor.beerapi.testutils.TestMother.BEER3_NAME;
 import static org.txor.beerapi.testutils.TestMother.BEER4_NAME;
 import static org.txor.beerapi.testutils.TestMother.BEER5_NAME;
 import static org.txor.beerapi.testutils.TestMother.MANUFACTURER1_NAME;
+import static org.txor.beerapi.testutils.TestMother.allBeerEntities;
 import static org.txor.beerapi.testutils.TestMother.allBeerNames;
 import static org.txor.beerapi.testutils.TestMother.beer1;
 import static org.txor.beerapi.testutils.TestMother.beer1Entity;
@@ -56,9 +59,9 @@ class BeerServiceTest {
 
     @Test
     public void getAllBeerNames_should_obtain_all_beer_names() {
-        when(dao.getAllBeerNames()).thenReturn(allBeerNames());
+        when(dao.findAll(any(org.springframework.data.domain.Sort.class))).thenReturn(allBeerEntities());
 
-        List<String> names = beerService.getAllBeerNames();
+        List<String> names = beerService.getAllBeerNames(new Sort("name", "asc"));
 
         assertThat(names.size()).isEqualTo(5);
         assertThat(names.get(0)).isEqualTo(BEER1_NAME);

@@ -45,7 +45,7 @@ class SortingFeatureTests {
 
     @Test
     @Sql({"/delete_beer_data.sql", "/delete_manufacturer_data.sql", "/insert_manufacturer_data.sql", "/insert_beer_data.sql"})
-    public void list_all_manufacturer_default_sort() throws Exception {
+    public void list_all_manufacturer() throws Exception {
         this.mockMvc.perform(get("/api/manufacturers"))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0]").value(MANUFACTURER1_NAME))
@@ -56,7 +56,29 @@ class SortingFeatureTests {
 
     @Test
     @Sql({"/delete_beer_data.sql", "/delete_manufacturer_data.sql", "/insert_manufacturer_data.sql", "/insert_beer_data.sql"})
-    public void list_all_beers_default_sort() throws Exception {
+    public void list_all_manufacturer_with_sorting() throws Exception {
+        this.mockMvc.perform(
+                get("/api/manufacturers")
+                        .param("sort", "nationality")
+                        .param("order", "desc"))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0]").value(MANUFACTURER1_NAME))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1]").value(MANUFACTURER2_NAME))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[2]").value(MANUFACTURER3_NAME));
+
+        this.mockMvc.perform(
+                get("/api/manufacturers")
+                        .param("sort", "name")
+                        .param("order", "desc"))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0]").value(MANUFACTURER3_NAME))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1]").value(MANUFACTURER2_NAME))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[2]").value(MANUFACTURER1_NAME));
+    }
+
+    @Test
+    @Sql({"/delete_beer_data.sql", "/delete_manufacturer_data.sql", "/insert_manufacturer_data.sql", "/insert_beer_data.sql"})
+    public void list_all_beers() throws Exception {
         this.mockMvc.perform(get("/api/beers"))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0]").value(BEER1_NAME))
@@ -64,6 +86,34 @@ class SortingFeatureTests {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[2]").value(BEER3_NAME))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[3]").value(BEER4_NAME))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[4]").value(BEER5_NAME))
+                .andDo(document("beer-list-example", responseBody()));
+    }
+
+    @Test
+    @Sql({"/delete_beer_data.sql", "/delete_manufacturer_data.sql", "/insert_manufacturer_data.sql", "/insert_beer_data.sql"})
+    public void list_all_beers_with_sorting() throws Exception {
+        this.mockMvc.perform(
+                get("/api/beers")
+                        .param("sort", "graduation")
+                        .param("order", "desc"))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0]").value(BEER5_NAME))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1]").value(BEER3_NAME))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[2]").value(BEER4_NAME))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[3]").value(BEER1_NAME))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[4]").value(BEER2_NAME))
+                .andDo(document("beer-list-example", responseBody()));
+
+        this.mockMvc.perform(
+                get("/api/beers")
+                        .param("sort", "type")
+                        .param("order", "asc"))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0]").value(BEER1_NAME))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1]").value(BEER3_NAME))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[2]").value(BEER5_NAME))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[3]").value(BEER2_NAME))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[4]").value(BEER4_NAME))
                 .andDo(document("beer-list-example", responseBody()));
     }
 }

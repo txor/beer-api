@@ -8,11 +8,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.txor.beerapi.api.converters.BeerConverter;
 import org.txor.beerapi.api.dto.BeerDTO;
 import org.txor.beerapi.domain.BeerService;
+import org.txor.beerapi.domain.model.Sort;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -27,8 +29,11 @@ public class BeerController {
     BeerConverter beerConverter;
 
     @GetMapping("/api/beers")
-    public List<String> getAllBeers() {
-        return beerService.getAllBeerNames();
+    public List<String> getAllBeers(
+            @RequestParam(defaultValue = "name") String sort,
+            @RequestParam(defaultValue = "asc") String order
+    ) {
+        return beerService.getAllBeerNames(new Sort(sort, order));
     }
 
     @PostMapping("/api/beer")

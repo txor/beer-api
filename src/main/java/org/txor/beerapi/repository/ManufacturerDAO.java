@@ -1,12 +1,11 @@
 package org.txor.beerapi.repository;
 
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.txor.beerapi.repository.entity.ManufacturerEntity;
 
 import java.util.List;
 
-public interface ManufacturerDAO extends CrudRepository<ManufacturerEntity, String> {
-    @Query(nativeQuery = true, value = "SELECT name FROM manufacturer")
-    List<String> getAllManufacturerNames();
+public interface ManufacturerDAO extends PagingAndSortingRepository<ManufacturerEntity, String> {
+    List<ManufacturerEntity> findAll(Sort sort);
 }

@@ -3,6 +3,7 @@ package org.txor.beerapi.domain;
 import org.txor.beerapi.domain.exceptions.BadResourceDataException;
 import org.txor.beerapi.domain.exceptions.ResourceNotFoundException;
 import org.txor.beerapi.domain.model.Manufacturer;
+import org.txor.beerapi.domain.model.Sort;
 
 import java.util.List;
 
@@ -14,8 +15,8 @@ public class ManufacturerService {
         this.manufacturerRepository = manufacturerRepository;
     }
 
-    public List<String> getAllManufacturerNames() {
-        return manufacturerRepository.getAllManufacturerNames();
+    public List<String> getAllManufacturerNames(Sort sort) {
+        return manufacturerRepository.getAllManufacturerNames(sort);
     }
 
     public void createManufacturer(Manufacturer manufacturer) {

@@ -28,9 +28,7 @@ import static org.txor.beerapi.testutils.TestMother.BEER1_DESCRIPTION;
 import static org.txor.beerapi.testutils.TestMother.BEER1_GRADUATION;
 import static org.txor.beerapi.testutils.TestMother.BEER1_NAME;
 import static org.txor.beerapi.testutils.TestMother.BEER1_TYPE;
-import static org.txor.beerapi.testutils.TestMother.BEER2_NAME;
 import static org.txor.beerapi.testutils.TestMother.MANUFACTURER1_NAME;
-import static org.txor.beerapi.testutils.TestMother.allBeerNames;
 import static org.txor.beerapi.testutils.TestMother.beer1;
 import static org.txor.beerapi.testutils.TestMother.beer1Dto;
 import static org.txor.beerapi.testutils.TestMother.beer1JsonString;
@@ -55,18 +53,6 @@ class BeerControllerTest {
 
     @Captor
     private ArgumentCaptor<String> beerNameCaptor;
-
-    @Test
-    public void getAllBeerNames_should_call_the_domain_collaborator() throws Exception {
-        when(beerService.getAllBeerNames()).thenReturn(allBeerNames());
-
-        this.mockMvc.perform(get("/api/beers"))
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0]").value(BEER1_NAME))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1]").value(BEER2_NAME));
-
-        verify(beerService).getAllBeerNames();
-    }
 
     @Test
     public void createBeer_should_convert_the_data_and_call_the_domain_collaborator() throws Exception {

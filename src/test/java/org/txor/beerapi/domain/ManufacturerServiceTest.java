@@ -10,6 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.txor.beerapi.domain.exceptions.BadResourceDataException;
 import org.txor.beerapi.domain.exceptions.ResourceNotFoundException;
 import org.txor.beerapi.domain.model.Manufacturer;
+import org.txor.beerapi.domain.model.Sort;
 import org.txor.beerapi.repository.ManufacturerDAO;
 import org.txor.beerapi.repository.ManufacturerDatabaseRepository;
 import org.txor.beerapi.repository.converters.ManufacturerEntityConverter;
@@ -20,6 +21,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -27,7 +29,7 @@ import static org.txor.beerapi.testutils.TestMother.MANUFACTURER1_NAME;
 import static org.txor.beerapi.testutils.TestMother.MANUFACTURER1_NATIONALITY;
 import static org.txor.beerapi.testutils.TestMother.MANUFACTURER2_NAME;
 import static org.txor.beerapi.testutils.TestMother.MANUFACTURER3_NAME;
-import static org.txor.beerapi.testutils.TestMother.allManufacturerNames;
+import static org.txor.beerapi.testutils.TestMother.allManufacturerEntities;
 import static org.txor.beerapi.testutils.TestMother.manufacturer1;
 import static org.txor.beerapi.testutils.TestMother.manufacturer1Entity;
 
@@ -51,9 +53,9 @@ class ManufacturerServiceTest {
 
     @Test
     public void getAllManufacturerNames_should_obtain_all_manufacturer_names() {
-        when(dao.getAllManufacturerNames()).thenReturn(allManufacturerNames());
+        when(dao.findAll(any(org.springframework.data.domain.Sort.class))).thenReturn(allManufacturerEntities());
 
-        List<String> names = manufacturerService.getAllManufacturerNames();
+        List<String> names = manufacturerService.getAllManufacturerNames(new Sort("name", "asc"));
 
         assertThat(names.size()).isEqualTo(3);
         assertThat(names.get(0)).isEqualTo(MANUFACTURER1_NAME);

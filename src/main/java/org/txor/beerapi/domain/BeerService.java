@@ -3,6 +3,7 @@ package org.txor.beerapi.domain;
 import org.txor.beerapi.domain.exceptions.BadResourceDataException;
 import org.txor.beerapi.domain.exceptions.ResourceNotFoundException;
 import org.txor.beerapi.domain.model.Beer;
+import org.txor.beerapi.domain.model.Sort;
 
 import java.util.List;
 
@@ -14,8 +15,8 @@ public class BeerService {
         this.repository = repository;
     }
 
-    public List<String> getAllBeerNames() {
-        return repository.getAllBeerNames();
+    public List<String> getAllBeerNames(Sort sort) {
+        return repository.getAllBeerNames(sort);
     }
 
     public void createBeer(Beer beer) {
