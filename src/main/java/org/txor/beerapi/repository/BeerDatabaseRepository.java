@@ -43,4 +43,9 @@ public class BeerDatabaseRepository implements BeerRepository {
     public boolean existsBeer(String name) {
         return repository.existsById(name);
     }
+
+    @Override
+    public void deleteBeer(String name) {
+        repository.deleteById(name);
+    }
 }

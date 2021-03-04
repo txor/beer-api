@@ -123,4 +123,22 @@ class BeerServiceTest {
                 () -> beerService.updateBeer("random beer name", beer1())
         );
     }
+
+    @Test
+    public void deleteBeer_should_delete_an_existing_beer() {
+        when(dao.existsById(anyString())).thenReturn(true);
+
+        beerService.deleteBeer(BEER1_NAME);
+
+        verify(dao).deleteById(BEER1_NAME);
+    }
+
+    @Test
+    public void deleteBeer_throw_exception_when_asked_to_delete_a_non_existing_beer() {
+        when(dao.existsById(BEER1_NAME)).thenReturn(false);
+
+        assertThrows(BeerNotFoundException.class,
+                () -> beerService.deleteBeer(BEER1_NAME)
+        );
+    }
 }

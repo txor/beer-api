@@ -38,5 +38,9 @@ public class BeerService {
     }
 
     public void deleteBeer(String name) {
+        if (!repository.existsBeer(name)) {
+            throw new BeerNotFoundException(name);
+        }
+        repository.deleteBeer(name);
     }
 }

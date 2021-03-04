@@ -20,6 +20,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
@@ -164,13 +165,16 @@ class BeerFeatureTests {
     }
 
     @Test
+    @Sql({"/delete_beer_data.sql", "/delete_manufacturer_data.sql", "/insert_manufacturer_data.sql", "/insert_beer_data.sql"})
     public void delete_beer() throws Exception {
-        this.mockMvc.perform(delete("/api/beer/{name}", MANUFACTURER1_NAME))
+        this.mockMvc.perform(delete("/api/beer/{name}", BEER1_NAME))
                 .andExpect(status().isOk())
                 .andDo(document("beer-delete-example"));
+        assertFalse(databaseTestClient.existsById(BEER1_NAME));
     }
 
     @Test
+    @Sql("/delete_beer_data.sql")
     public void not_delete_non_existing_beer() throws Exception {
         this.mockMvc.perform(delete("/api/beer/{name}", BEER1_NAME))
                 .andExpect(status().isNotFound())

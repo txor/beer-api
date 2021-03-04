@@ -16,4 +16,6 @@ public interface BeerRepository {
     void saveManufacturer(Beer beer);
 
     boolean existsBeer(String name);
+
+    void deleteBeer(String name);
 }
