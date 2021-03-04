@@ -23,12 +23,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.txor.beerapi.TestMother.MANUFACTURER1_NAME;
-import static org.txor.beerapi.TestMother.MANUFACTURER1_NATIONALITY;
-import static org.txor.beerapi.TestMother.MANUFACTURER2_NAME;
-import static org.txor.beerapi.TestMother.allManufacturerNames;
-import static org.txor.beerapi.TestMother.manufacturer1;
-import static org.txor.beerapi.TestMother.manufacturer1Entity;
+import static org.txor.beerapi.testutils.TestMother.MANUFACTURER1_NAME;
+import static org.txor.beerapi.testutils.TestMother.MANUFACTURER1_NATIONALITY;
+import static org.txor.beerapi.testutils.TestMother.MANUFACTURER2_NAME;
+import static org.txor.beerapi.testutils.TestMother.allManufacturerNames;
+import static org.txor.beerapi.testutils.TestMother.manufacturer1;
+import static org.txor.beerapi.testutils.TestMother.manufacturer1Entity;
 
 @ExtendWith(MockitoExtension.class)
 class ManufacturerServiceTest {

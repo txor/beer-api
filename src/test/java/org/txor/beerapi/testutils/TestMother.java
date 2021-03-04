@@ -1,4 +1,4 @@
-package org.txor.beerapi;
+package org.txor.beerapi.testutils;
 
 import org.txor.beerapi.api.dto.BeerDTO;
 import org.txor.beerapi.api.dto.ManufacturerDTO;

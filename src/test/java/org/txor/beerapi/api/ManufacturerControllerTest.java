@@ -24,12 +24,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.txor.beerapi.TestMother.MANUFACTURER1_NAME;
-import static org.txor.beerapi.TestMother.MANUFACTURER1_NATIONALITY;
-import static org.txor.beerapi.TestMother.MANUFACTURER2_NAME;
-import static org.txor.beerapi.TestMother.allManufacturerNames;
-import static org.txor.beerapi.TestMother.manufacturer1;
-import static org.txor.beerapi.TestMother.manufacturer1Dto;
+import static org.txor.beerapi.testutils.TestMother.MANUFACTURER1_NAME;
+import static org.txor.beerapi.testutils.TestMother.MANUFACTURER1_NATIONALITY;
+import static org.txor.beerapi.testutils.TestMother.MANUFACTURER2_NAME;
+import static org.txor.beerapi.testutils.TestMother.allManufacturerNames;
+import static org.txor.beerapi.testutils.TestMother.manufacturer1;
+import static org.txor.beerapi.testutils.TestMother.manufacturer1Dto;
 
 @WebMvcTest(ManufacturerController.class)
 class ManufacturerControllerTest {

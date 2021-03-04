@@ -5,13 +5,13 @@ import org.txor.beerapi.api.dto.BeerDTO;
 import org.txor.beerapi.domain.model.Beer;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.txor.beerapi.TestMother.BEER1_DESCRIPTION;
-import static org.txor.beerapi.TestMother.BEER1_GRADUATION;
-import static org.txor.beerapi.TestMother.BEER1_NAME;
-import static org.txor.beerapi.TestMother.BEER1_TYPE;
-import static org.txor.beerapi.TestMother.MANUFACTURER1_NAME;
-import static org.txor.beerapi.TestMother.beer1;
-import static org.txor.beerapi.TestMother.beer1Dto;
+import static org.txor.beerapi.testutils.TestMother.BEER1_DESCRIPTION;
+import static org.txor.beerapi.testutils.TestMother.BEER1_GRADUATION;
+import static org.txor.beerapi.testutils.TestMother.BEER1_NAME;
+import static org.txor.beerapi.testutils.TestMother.BEER1_TYPE;
+import static org.txor.beerapi.testutils.TestMother.MANUFACTURER1_NAME;
+import static org.txor.beerapi.testutils.TestMother.beer1;
+import static org.txor.beerapi.testutils.TestMother.beer1Dto;
 
 class BeerConverterTest {
 

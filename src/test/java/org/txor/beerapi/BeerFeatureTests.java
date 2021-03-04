@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.txor.beerapi.repository.entity.BeerEntity;
+import org.txor.beerapi.testutils.BeerDatabaseTestClient;
 
 import java.util.Optional;
 
@@ -32,13 +33,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.txor.beerapi.TestMother.BEER1_DESCRIPTION;
-import static org.txor.beerapi.TestMother.BEER1_GRADUATION;
-import static org.txor.beerapi.TestMother.BEER1_NAME;
-import static org.txor.beerapi.TestMother.BEER1_TYPE;
-import static org.txor.beerapi.TestMother.BEER2_NAME;
-import static org.txor.beerapi.TestMother.MANUFACTURER1_NAME;
-import static org.txor.beerapi.TestMother.beer1JsonString;
+import static org.txor.beerapi.testutils.TestMother.BEER1_DESCRIPTION;
+import static org.txor.beerapi.testutils.TestMother.BEER1_GRADUATION;
+import static org.txor.beerapi.testutils.TestMother.BEER1_NAME;
+import static org.txor.beerapi.testutils.TestMother.BEER1_TYPE;
+import static org.txor.beerapi.testutils.TestMother.BEER2_NAME;
+import static org.txor.beerapi.testutils.TestMother.MANUFACTURER1_NAME;
+import static org.txor.beerapi.testutils.TestMother.beer1JsonString;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})

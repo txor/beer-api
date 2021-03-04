@@ -24,16 +24,16 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.txor.beerapi.TestMother.BEER1_DESCRIPTION;
-import static org.txor.beerapi.TestMother.BEER1_GRADUATION;
-import static org.txor.beerapi.TestMother.BEER1_NAME;
-import static org.txor.beerapi.TestMother.BEER1_TYPE;
-import static org.txor.beerapi.TestMother.BEER2_NAME;
-import static org.txor.beerapi.TestMother.MANUFACTURER1_NAME;
-import static org.txor.beerapi.TestMother.allBeerNames;
-import static org.txor.beerapi.TestMother.beer1;
-import static org.txor.beerapi.TestMother.beer1Dto;
-import static org.txor.beerapi.TestMother.beer1JsonString;
+import static org.txor.beerapi.testutils.TestMother.BEER1_DESCRIPTION;
+import static org.txor.beerapi.testutils.TestMother.BEER1_GRADUATION;
+import static org.txor.beerapi.testutils.TestMother.BEER1_NAME;
+import static org.txor.beerapi.testutils.TestMother.BEER1_TYPE;
+import static org.txor.beerapi.testutils.TestMother.BEER2_NAME;
+import static org.txor.beerapi.testutils.TestMother.MANUFACTURER1_NAME;
+import static org.txor.beerapi.testutils.TestMother.allBeerNames;
+import static org.txor.beerapi.testutils.TestMother.beer1;
+import static org.txor.beerapi.testutils.TestMother.beer1Dto;
+import static org.txor.beerapi.testutils.TestMother.beer1JsonString;
 
 @WebMvcTest(BeerController.class)
 class BeerControllerTest {

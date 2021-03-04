@@ -5,10 +5,10 @@ import org.txor.beerapi.api.dto.ManufacturerDTO;
 import org.txor.beerapi.domain.model.Manufacturer;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.txor.beerapi.TestMother.MANUFACTURER1_NAME;
-import static org.txor.beerapi.TestMother.MANUFACTURER1_NATIONALITY;
-import static org.txor.beerapi.TestMother.manufacturer1;
-import static org.txor.beerapi.TestMother.manufacturer1Dto;
+import static org.txor.beerapi.testutils.TestMother.MANUFACTURER1_NAME;
+import static org.txor.beerapi.testutils.TestMother.MANUFACTURER1_NATIONALITY;
+import static org.txor.beerapi.testutils.TestMother.manufacturer1;
+import static org.txor.beerapi.testutils.TestMother.manufacturer1Dto;
 
 class ManufacturerConverterTest {
 

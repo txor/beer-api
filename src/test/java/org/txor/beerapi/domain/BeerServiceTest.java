@@ -23,15 +23,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.txor.beerapi.TestMother.BEER1_DESCRIPTION;
-import static org.txor.beerapi.TestMother.BEER1_GRADUATION;
-import static org.txor.beerapi.TestMother.BEER1_NAME;
-import static org.txor.beerapi.TestMother.BEER1_TYPE;
-import static org.txor.beerapi.TestMother.BEER2_NAME;
-import static org.txor.beerapi.TestMother.MANUFACTURER1_NAME;
-import static org.txor.beerapi.TestMother.allBeerNames;
-import static org.txor.beerapi.TestMother.beer1;
-import static org.txor.beerapi.TestMother.beer1Entity;
+import static org.txor.beerapi.testutils.TestMother.BEER1_DESCRIPTION;
+import static org.txor.beerapi.testutils.TestMother.BEER1_GRADUATION;
+import static org.txor.beerapi.testutils.TestMother.BEER1_NAME;
+import static org.txor.beerapi.testutils.TestMother.BEER1_TYPE;
+import static org.txor.beerapi.testutils.TestMother.BEER2_NAME;
+import static org.txor.beerapi.testutils.TestMother.MANUFACTURER1_NAME;
+import static org.txor.beerapi.testutils.TestMother.allBeerNames;
+import static org.txor.beerapi.testutils.TestMother.beer1;
+import static org.txor.beerapi.testutils.TestMother.beer1Entity;
 
 @ExtendWith(MockitoExtension.class)
 class BeerServiceTest {
