@@ -12,4 +12,8 @@ public interface BeerRepository {
     void saveBeer(Beer beer);
 
     Optional<Beer> getBeer(String name);
+
+    void saveManufacturer(Beer beer);
+
+    boolean existsBeer(String name);
 }

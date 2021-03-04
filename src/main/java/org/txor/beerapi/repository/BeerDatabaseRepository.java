@@ -33,4 +33,14 @@ public class BeerDatabaseRepository implements BeerRepository {
     public Optional<Beer> getBeer(String name) {
         return repository.findById(name).map(converter::convert);
     }
+
+    @Override
+    public void saveManufacturer(Beer beer) {
+        repository.save(converter.convert(beer));
+    }
+
+    @Override
+    public boolean existsBeer(String name) {
+        return repository.existsById(name);
+    }
 }

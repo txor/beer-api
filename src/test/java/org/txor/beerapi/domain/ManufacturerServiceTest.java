@@ -98,11 +98,10 @@ class ManufacturerServiceTest {
 
     @Test
     public void updateManufacturer_should_throw_an_exception_when_asked_to_update_a_non_existing_manufacturer() {
-        String manufacturer = "non existing manufacturer";
         when(dao.existsById(anyString())).thenReturn(false);
 
         assertThrows(ManufacturerNotFoundException.class,
-                () -> manufacturerService.updateManufacturer(manufacturer, new Manufacturer(manufacturer, "anywhere"))
+                () -> manufacturerService.updateManufacturer(MANUFACTURER1_NAME, manufacturer1())
         );
     }
 

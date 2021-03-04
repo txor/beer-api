@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.txor.beerapi.domain.exceptions.BadBeerDataException;
 import org.txor.beerapi.domain.exceptions.BeerNotFoundException;
 
 @ControllerAdvice
@@ -14,6 +15,13 @@ public class BeerControllerExceptionHandler {
     @ExceptionHandler(BeerNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String beerNotFoundHandler(BeerNotFoundException ex) {
+        return ex.getMessage();
+    }
+
+    @ResponseBody
+    @ExceptionHandler(BadBeerDataException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String badBeerDataHandler(BadBeerDataException ex) {
         return ex.getMessage();
     }
 }

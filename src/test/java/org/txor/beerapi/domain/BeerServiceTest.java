@@ -7,6 +7,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.txor.beerapi.domain.exceptions.BadBeerDataException;
 import org.txor.beerapi.domain.exceptions.BeerNotFoundException;
 import org.txor.beerapi.domain.model.Beer;
 import org.txor.beerapi.repository.BeerDAO;
@@ -92,5 +93,34 @@ class BeerServiceTest {
 
         assertThrows(BeerNotFoundException.class,
                 () -> beerService.getBeer(BEER1_NAME));
+    }
+
+    @Test
+    public void updateBeer_should_update_an_existing_beer_with_the_given_data() {
+        when(dao.existsById(anyString())).thenReturn(true);
+        beerService.updateBeer(BEER1_NAME, beer1());
+
+        verify(dao).save(beerCaptor.capture());
+        assertThat(beerCaptor.getValue().getName()).isEqualTo(BEER1_NAME);
+        assertThat(beerCaptor.getValue().getGraduation()).isEqualTo(BEER1_GRADUATION);
+        assertThat(beerCaptor.getValue().getType()).isEqualTo(BEER1_TYPE);
+        assertThat(beerCaptor.getValue().getDescription()).isEqualTo(BEER1_DESCRIPTION);
+        assertThat(beerCaptor.getValue().getManufacturer().getName()).isEqualTo(MANUFACTURER1_NAME);
+    }
+
+    @Test
+    public void updateBeer_should_throw_an_exception_when_asked_to_update_a_non_existing_beer() {
+        when(dao.existsById(anyString())).thenReturn(false);
+
+        assertThrows(BeerNotFoundException.class,
+                () -> beerService.updateBeer(BEER1_NAME, beer1())
+        );
+    }
+
+    @Test
+    public void updateBeer_should_throw_an_exception_when_asked_to_persist_the_beer_data_on_a_different_beer_name() {
+        assertThrows(BadBeerDataException.class,
+                () -> beerService.updateBeer("random beer name", beer1())
+        );
     }
 }

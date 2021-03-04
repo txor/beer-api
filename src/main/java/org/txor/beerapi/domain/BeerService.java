@@ -1,5 +1,6 @@
 package org.txor.beerapi.domain;
 
+import org.txor.beerapi.domain.exceptions.BadBeerDataException;
 import org.txor.beerapi.domain.exceptions.BeerNotFoundException;
 import org.txor.beerapi.domain.model.Beer;
 
@@ -26,7 +27,14 @@ public class BeerService {
                 .orElseThrow(() -> new BeerNotFoundException(name));
     }
 
-    public void updateBeer(String name, Beer beerData) {
+    public void updateBeer(String name, Beer beer) {
+        if (!name.equalsIgnoreCase(beer.getName())) {
+            throw new BadBeerDataException(name);
+        }
+        if (!repository.existsBeer(name)) {
+            throw new BeerNotFoundException(name);
+        }
+        repository.saveManufacturer(beer);
     }
 
     public void deleteBeer(String name) {

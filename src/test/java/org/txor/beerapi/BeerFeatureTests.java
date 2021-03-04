@@ -14,7 +14,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import org.txor.beerapi.repository.entity.BeerEntity;
 
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -110,8 +114,9 @@ class BeerFeatureTests {
     }
 
     @Test
+    @Sql({"/delete_beer_data.sql", "/delete_manufacturer_data.sql", "/insert_manufacturer_data.sql", "/insert_minimal_beer_data.sql"})
     public void update_beer_information() throws Exception {
-        this.mockMvc.perform(put("/api/beer/{name}", "some beer")
+        this.mockMvc.perform(put("/api/beer/{name}", BEER1_NAME)
                 .content(beer1JsonString())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent())
@@ -122,6 +127,11 @@ class BeerFeatureTests {
                                 fieldWithPath("type").description("The beer type"),
                                 fieldWithPath("description").description("The beer description"),
                                 fieldWithPath("manufacturer").description("The beer manufacturer name"))));
+        Optional<BeerEntity> persistedBeer = databaseTestClient.findById(BEER1_NAME);
+        assertThat(persistedBeer).map(BeerEntity::getGraduation).hasValue(BEER1_GRADUATION);
+        assertThat(persistedBeer).map(BeerEntity::getType).hasValue(BEER1_TYPE);
+        assertThat(persistedBeer).map(BeerEntity::getDescription).hasValue(BEER1_DESCRIPTION);
+        assertThat(persistedBeer).map(beer -> beer.getManufacturer().getName()).hasValue(MANUFACTURER1_NAME);
     }
 
     @Test
@@ -133,14 +143,24 @@ class BeerFeatureTests {
     }
 
     @Test
+    @Sql("/delete_beer_data.sql")
     public void not_update_non_existing_beer() throws Exception {
-        String nonExistingBeer = "non existing beer";
-
-        this.mockMvc.perform(put("/api/beer/{name}", nonExistingBeer)
+        this.mockMvc.perform(put("/api/beer/{name}", BEER1_NAME)
                 .content(beer1JsonString())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
-                .andExpect(result -> assertEquals(nonExistingBeer + " not found", result.getResponse().getContentAsString()));
+                .andExpect(result -> assertEquals(BEER1_NAME + " not found", result.getResponse().getContentAsString()));
+    }
+
+    @Test
+    public void not_update_non_matching_beer_data() throws Exception {
+        String randomBeerName = "random beer name";
+
+        this.mockMvc.perform(put("/api/beer/{name}/", randomBeerName)
+                .content(beer1JsonString())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(result -> assertEquals(randomBeerName + " does not match", result.getResponse().getContentAsString()));
     }
 
     @Test
