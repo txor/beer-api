@@ -7,14 +7,19 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.txor.beerapi.domain.exceptions.BeerNotFoundException;
+import org.txor.beerapi.domain.model.Beer;
 import org.txor.beerapi.repository.BeerDAO;
 import org.txor.beerapi.repository.BeerDatabaseRepository;
 import org.txor.beerapi.repository.converters.BeerEntityConverter;
 import org.txor.beerapi.repository.entity.BeerEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.txor.beerapi.TestMother.BEER1_DESCRIPTION;
@@ -25,6 +30,7 @@ import static org.txor.beerapi.TestMother.BEER2_NAME;
 import static org.txor.beerapi.TestMother.MANUFACTURER1_NAME;
 import static org.txor.beerapi.TestMother.allBeerNames;
 import static org.txor.beerapi.TestMother.beer1;
+import static org.txor.beerapi.TestMother.beer1Entity;
 
 @ExtendWith(MockitoExtension.class)
 class BeerServiceTest {
@@ -65,5 +71,26 @@ class BeerServiceTest {
         assertThat(beerCaptor.getValue().getType()).isEqualTo(BEER1_TYPE);
         assertThat(beerCaptor.getValue().getDescription()).isEqualTo(BEER1_DESCRIPTION);
         assertThat(beerCaptor.getValue().getManufacturer().getName()).isEqualTo(MANUFACTURER1_NAME);
+    }
+
+    @Test
+    public void getBeer_should_return_an_existing_beer() {
+        when(dao.findById(anyString())).thenReturn(Optional.of(beer1Entity()));
+
+        Beer beer = beerService.getBeer(MANUFACTURER1_NAME);
+
+        assertThat(beer.getName()).isEqualTo(BEER1_NAME);
+        assertThat(beer.getGraduation()).isEqualTo(BEER1_GRADUATION);
+        assertThat(beer.getType()).isEqualTo(BEER1_TYPE);
+        assertThat(beer.getDescription()).isEqualTo(BEER1_DESCRIPTION);
+        assertThat(beer.getManufacturer()).isEqualTo(MANUFACTURER1_NAME);
+    }
+
+    @Test
+    public void getBeer_should_throw_an_exception_when_trying_to_fetch_a_non_existing_beer() {
+        when(dao.findById(anyString())).thenReturn(Optional.empty());
+
+        assertThrows(BeerNotFoundException.class,
+                () -> beerService.getBeer(BEER1_NAME));
     }
 }

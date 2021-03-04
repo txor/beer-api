@@ -1,5 +1,6 @@
 package org.txor.beerapi.domain;
 
+import org.txor.beerapi.domain.exceptions.BeerNotFoundException;
 import org.txor.beerapi.domain.model.Beer;
 
 import java.util.List;
@@ -21,7 +22,8 @@ public class BeerService {
     }
 
     public Beer getBeer(String name) {
-        return null;
+        return repository.getBeer(name)
+                .orElseThrow(() -> new BeerNotFoundException(name));
     }
 
     public void updateBeer(String name, Beer beerData) {

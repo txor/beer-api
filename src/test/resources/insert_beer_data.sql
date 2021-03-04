@@ -1,3 +1,3 @@
 INSERT INTO beer VALUES
-('Coronita', 4.5, 'Pale Lager', 'Extra Coronita Mexican Beer is an even-keeled import beer with fruity-honey aromas and a touch of malt.', null),
-('Franziskaner', 5, 'Wheat Beer', 'Smells of doughy malt and estery fruit and spice, with notes of banana and clove, as well as lighter, herbal hops. Taste follows the nose, with a decent balance of doughy malt, estery fruit and spice, with distinct banana and clove notes and lighter grassy and herbal hops.', null);
+('Coronita', 4.5, 'Pale Lager', 'Extra Coronita Mexican Beer is an even-keeled import beer with fruity-honey aromas and a touch of malt.', 'Grupo Modelo, AB InBev'),
+('Franziskaner', 5, 'Wheat Beer', 'Smells of doughy malt and estery fruit and spice, with notes of banana and clove, as well as lighter, herbal hops. Taste follows the nose, with a decent balance of doughy malt, estery fruit and spice, with distinct banana and clove notes and lighter grassy and herbal hops.', 'Spaten-Franziskaner-Bräu GmbH');

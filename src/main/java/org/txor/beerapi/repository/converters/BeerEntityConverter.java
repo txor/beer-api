@@ -10,4 +10,8 @@ public class BeerEntityConverter {
     public BeerEntity convert(Beer beer) {
         return new BeerEntity(beer.getName(), beer.getGraduation(), beer.getType(), beer.getDescription(), new ManufacturerEntity(beer.getManufacturer(), null));
     }
+
+    public Beer convert(BeerEntity beer) {
+        return new Beer(beer.getName(), beer.getGraduation(), beer.getType(), beer.getDescription(), beer.getManufacturer().getName());
+    }
 }

@@ -4,6 +4,7 @@ import org.txor.beerapi.api.dto.BeerDTO;
 import org.txor.beerapi.api.dto.ManufacturerDTO;
 import org.txor.beerapi.domain.model.Beer;
 import org.txor.beerapi.domain.model.Manufacturer;
+import org.txor.beerapi.repository.entity.BeerEntity;
 import org.txor.beerapi.repository.entity.ManufacturerEntity;
 
 import java.util.Arrays;
@@ -37,6 +38,10 @@ public class TestMother {
 
     public static BeerDTO beer1Dto() {
         return new BeerDTO(BEER1_NAME, BEER1_GRADUATION, BEER1_TYPE, BEER1_DESCRIPTION, MANUFACTURER1_NAME);
+    }
+
+    public static BeerEntity beer1Entity() {
+        return new BeerEntity(BEER1_NAME, BEER1_GRADUATION, BEER1_TYPE, BEER1_DESCRIPTION, new ManufacturerEntity(MANUFACTURER1_NAME, MANUFACTURER1_NATIONALITY));
     }
 
     public static String beer1JsonString() {

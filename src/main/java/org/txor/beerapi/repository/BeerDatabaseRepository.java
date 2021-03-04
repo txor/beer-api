@@ -6,6 +6,7 @@ import org.txor.beerapi.domain.model.Beer;
 import org.txor.beerapi.repository.converters.BeerEntityConverter;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class BeerDatabaseRepository implements BeerRepository {
@@ -26,5 +27,10 @@ public class BeerDatabaseRepository implements BeerRepository {
     @Override
     public void saveBeer(Beer beer) {
         repository.save(converter.convert(beer));
+    }
+
+    @Override
+    public Optional<Beer> getBeer(String name) {
+        return repository.findById(name).map(converter::convert);
     }
 }

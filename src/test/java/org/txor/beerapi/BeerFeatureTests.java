@@ -89,6 +89,7 @@ class BeerFeatureTests {
     }
 
     @Test
+    @Sql({"/delete_beer_data.sql", "/delete_manufacturer_data.sql", "/insert_manufacturer_data.sql", "/insert_beer_data.sql"})
     public void retrieve_beer_information() throws Exception {
         this.mockMvc.perform(get("/api/beer/{name}", BEER1_NAME))
                 .andExpect(status().isOk())
