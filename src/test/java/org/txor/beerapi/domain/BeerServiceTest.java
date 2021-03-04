@@ -7,8 +7,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.txor.beerapi.domain.exceptions.BadBeerDataException;
-import org.txor.beerapi.domain.exceptions.BeerNotFoundException;
+import org.txor.beerapi.domain.exceptions.BadResourceDataException;
+import org.txor.beerapi.domain.exceptions.ResourceNotFoundException;
 import org.txor.beerapi.domain.model.Beer;
 import org.txor.beerapi.repository.BeerDAO;
 import org.txor.beerapi.repository.BeerDatabaseRepository;
@@ -91,7 +91,7 @@ class BeerServiceTest {
     public void getBeer_should_throw_an_exception_when_trying_to_fetch_a_non_existing_beer() {
         when(dao.findById(anyString())).thenReturn(Optional.empty());
 
-        assertThrows(BeerNotFoundException.class,
+        assertThrows(ResourceNotFoundException.class,
                 () -> beerService.getBeer(BEER1_NAME));
     }
 
@@ -112,14 +112,14 @@ class BeerServiceTest {
     public void updateBeer_should_throw_an_exception_when_asked_to_update_a_non_existing_beer() {
         when(dao.existsById(anyString())).thenReturn(false);
 
-        assertThrows(BeerNotFoundException.class,
+        assertThrows(ResourceNotFoundException.class,
                 () -> beerService.updateBeer(BEER1_NAME, beer1())
         );
     }
 
     @Test
     public void updateBeer_should_throw_an_exception_when_asked_to_persist_the_beer_data_on_a_different_beer_name() {
-        assertThrows(BadBeerDataException.class,
+        assertThrows(BadResourceDataException.class,
                 () -> beerService.updateBeer("random beer name", beer1())
         );
     }
@@ -137,7 +137,7 @@ class BeerServiceTest {
     public void deleteBeer_throw_exception_when_asked_to_delete_a_non_existing_beer() {
         when(dao.existsById(BEER1_NAME)).thenReturn(false);
 
-        assertThrows(BeerNotFoundException.class,
+        assertThrows(ResourceNotFoundException.class,
                 () -> beerService.deleteBeer(BEER1_NAME)
         );
     }

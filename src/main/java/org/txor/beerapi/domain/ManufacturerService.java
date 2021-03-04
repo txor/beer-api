@@ -1,7 +1,7 @@
 package org.txor.beerapi.domain;
 
-import org.txor.beerapi.domain.exceptions.BadManufacturerDataException;
-import org.txor.beerapi.domain.exceptions.ManufacturerNotFoundException;
+import org.txor.beerapi.domain.exceptions.BadResourceDataException;
+import org.txor.beerapi.domain.exceptions.ResourceNotFoundException;
 import org.txor.beerapi.domain.model.Manufacturer;
 
 import java.util.List;
@@ -24,22 +24,22 @@ public class ManufacturerService {
 
     public Manufacturer getManufacturer(String name) {
         return manufacturerRepository.getManufacturer(name)
-                .orElseThrow(() -> new ManufacturerNotFoundException(name));
+                .orElseThrow(() -> new ResourceNotFoundException(name));
     }
 
     public void updateManufacturer(String name, Manufacturer manufacturer) {
         if (!name.equalsIgnoreCase(manufacturer.getName())) {
-            throw new BadManufacturerDataException(name);
+            throw new BadResourceDataException(name);
         }
         if (!manufacturerRepository.existsManufacturer(name)) {
-            throw new ManufacturerNotFoundException(name);
+            throw new ResourceNotFoundException(name);
         }
         manufacturerRepository.saveManufacturer(manufacturer);
     }
 
     public void deleteManufacturer(String name) {
         if (!manufacturerRepository.existsManufacturer(name)) {
-            throw new ManufacturerNotFoundException(name);
+            throw new ResourceNotFoundException(name);
         }
         manufacturerRepository.deleteManufacturer(name);
     }

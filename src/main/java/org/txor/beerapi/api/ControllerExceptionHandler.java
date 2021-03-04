@@ -5,23 +5,23 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.txor.beerapi.domain.exceptions.BadManufacturerDataException;
-import org.txor.beerapi.domain.exceptions.ManufacturerNotFoundException;
+import org.txor.beerapi.domain.exceptions.BadResourceDataException;
+import org.txor.beerapi.domain.exceptions.ResourceNotFoundException;
 
 @ControllerAdvice
-public class ManufacturerControllerExceptionHandler {
+public class ControllerExceptionHandler {
 
     @ResponseBody
-    @ExceptionHandler(ManufacturerNotFoundException.class)
+    @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String manufacturerNotFoundHandler(ManufacturerNotFoundException ex) {
+    public String beerNotFoundHandler(ResourceNotFoundException ex) {
         return ex.getMessage();
     }
 
     @ResponseBody
-    @ExceptionHandler(BadManufacturerDataException.class)
+    @ExceptionHandler(BadResourceDataException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String badManufacturerDataHandler(BadManufacturerDataException ex) {
+    public String badBeerDataHandler(BadResourceDataException ex) {
         return ex.getMessage();
     }
 }

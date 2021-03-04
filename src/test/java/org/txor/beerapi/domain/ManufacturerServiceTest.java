@@ -7,8 +7,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.txor.beerapi.domain.exceptions.BadManufacturerDataException;
-import org.txor.beerapi.domain.exceptions.ManufacturerNotFoundException;
+import org.txor.beerapi.domain.exceptions.BadResourceDataException;
+import org.txor.beerapi.domain.exceptions.ResourceNotFoundException;
 import org.txor.beerapi.domain.model.Manufacturer;
 import org.txor.beerapi.repository.ManufacturerDAO;
 import org.txor.beerapi.repository.ManufacturerDatabaseRepository;
@@ -82,7 +82,7 @@ class ManufacturerServiceTest {
     public void getManufacturer_should_throw_an_exception_when_trying_to_fetch_a_non_existing_manufacturer() {
         when(dao.findById(anyString())).thenReturn(Optional.empty());
 
-        assertThrows(ManufacturerNotFoundException.class,
+        assertThrows(ResourceNotFoundException.class,
                 () -> manufacturerService.getManufacturer(MANUFACTURER1_NAME));
     }
 
@@ -100,14 +100,14 @@ class ManufacturerServiceTest {
     public void updateManufacturer_should_throw_an_exception_when_asked_to_update_a_non_existing_manufacturer() {
         when(dao.existsById(anyString())).thenReturn(false);
 
-        assertThrows(ManufacturerNotFoundException.class,
+        assertThrows(ResourceNotFoundException.class,
                 () -> manufacturerService.updateManufacturer(MANUFACTURER1_NAME, manufacturer1())
         );
     }
 
     @Test
     public void updateManufacturer_should_throw_an_exception_when_asked_to_persist_the_manufacturer_data_on_a_different_manufacturer_name() {
-        assertThrows(BadManufacturerDataException.class,
+        assertThrows(BadResourceDataException.class,
                 () -> manufacturerService.updateManufacturer("random manufacturer name", manufacturer1())
         );
     }
@@ -125,7 +125,7 @@ class ManufacturerServiceTest {
     public void deleteManufacturer_throw_exception_when_asked_to_delete_a_non_existing_manufacturer() {
         when(dao.existsById(MANUFACTURER1_NAME)).thenReturn(false);
 
-        assertThrows(ManufacturerNotFoundException.class,
+        assertThrows(ResourceNotFoundException.class,
                 () -> manufacturerService.deleteManufacturer(MANUFACTURER1_NAME)
         );
     }

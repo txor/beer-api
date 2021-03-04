@@ -1,7 +1,7 @@
 package org.txor.beerapi.domain;
 
-import org.txor.beerapi.domain.exceptions.BadBeerDataException;
-import org.txor.beerapi.domain.exceptions.BeerNotFoundException;
+import org.txor.beerapi.domain.exceptions.BadResourceDataException;
+import org.txor.beerapi.domain.exceptions.ResourceNotFoundException;
 import org.txor.beerapi.domain.model.Beer;
 
 import java.util.List;
@@ -24,22 +24,22 @@ public class BeerService {
 
     public Beer getBeer(String name) {
         return repository.getBeer(name)
-                .orElseThrow(() -> new BeerNotFoundException(name));
+                .orElseThrow(() -> new ResourceNotFoundException(name));
     }
 
     public void updateBeer(String name, Beer beer) {
         if (!name.equalsIgnoreCase(beer.getName())) {
-            throw new BadBeerDataException(name);
+            throw new BadResourceDataException(name);
         }
         if (!repository.existsBeer(name)) {
-            throw new BeerNotFoundException(name);
+            throw new ResourceNotFoundException(name);
         }
         repository.saveManufacturer(beer);
     }
 
     public void deleteBeer(String name) {
         if (!repository.existsBeer(name)) {
-            throw new BeerNotFoundException(name);
+            throw new ResourceNotFoundException(name);
         }
         repository.deleteBeer(name);
     }
