@@ -7,6 +7,6 @@ import org.txor.beerapi.repository.entity.BeerEntity;
 import java.util.List;
 
 public interface BeerDAO extends CrudRepository<BeerEntity, String> {
-    @Query(nativeQuery = true, value = "SELECT name FROM manufacturer")
+    @Query(nativeQuery = true, value = "SELECT name FROM beer")
     List<String> getAllBeerNames();
 }

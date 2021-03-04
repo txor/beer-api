@@ -8,14 +8,14 @@ import java.util.List;
 
 public class BeerService {
 
-    private final BeerDatabaseRepository beerDatabaseRepository;
+    private final BeerDatabaseRepository repository;
 
-    public BeerService(BeerDatabaseRepository beerDatabaseRepository) {
-        this.beerDatabaseRepository = beerDatabaseRepository;
+    public BeerService(BeerDatabaseRepository repository) {
+        this.repository = repository;
     }
 
     public List<String> getAllBeerNames() {
-        return new ArrayList<>();
+        return repository.getAllBeerNames();
     }
 
     public Beer getBeer(String name) {
