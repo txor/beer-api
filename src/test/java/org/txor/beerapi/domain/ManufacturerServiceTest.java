@@ -34,23 +34,23 @@ import static org.txor.beerapi.TestMother.manufacturer1Entity;
 class ManufacturerServiceTest {
 
     @Mock
-    ManufacturerDAO repository;
-
-    private ManufacturerService manufacturerService;
+    ManufacturerDAO dao;
 
     @Captor
     private ArgumentCaptor<ManufacturerEntity> manufacturerCaptor;
 
+    private ManufacturerService manufacturerService;
+
     @BeforeEach
     public void setUp() {
         ManufacturerEntityConverter converter = new ManufacturerEntityConverter();
-        ManufacturerDatabaseRepository manufacturerDatabaseRepository = new ManufacturerDatabaseRepository(repository, converter);
-        manufacturerService = new ManufacturerService(manufacturerDatabaseRepository);
+        ManufacturerRepository manufacturerRepository = new ManufacturerDatabaseRepository(dao, converter);
+        manufacturerService = new ManufacturerService(manufacturerRepository);
     }
 
     @Test
     public void getAllManufacturerNames_should_obtain_all_manufacturer_names() {
-        when(repository.getAllManufacturerNames()).thenReturn(allManufacturerNames());
+        when(dao.getAllManufacturerNames()).thenReturn(allManufacturerNames());
 
         List<String> names = manufacturerService.getAllManufacturerNames();
 
@@ -63,14 +63,14 @@ class ManufacturerServiceTest {
     public void createManufacturer_should_persist_the_new_manufacturer() {
         manufacturerService.createManufacturer(manufacturer1());
 
-        verify(repository).save(manufacturerCaptor.capture());
+        verify(dao).save(manufacturerCaptor.capture());
         assertThat(manufacturerCaptor.getValue().getName()).isEqualTo(MANUFACTURER1_NAME);
         assertThat(manufacturerCaptor.getValue().getNationality()).isEqualTo(MANUFACTURER1_NATIONALITY);
     }
 
     @Test
     public void getManufacturer_should_return_an_existing_manufacturer() {
-        when(repository.findById(anyString())).thenReturn(Optional.of(manufacturer1Entity()));
+        when(dao.findById(anyString())).thenReturn(Optional.of(manufacturer1Entity()));
 
         Manufacturer manufacturer = manufacturerService.getManufacturer(MANUFACTURER1_NAME);
 
@@ -80,7 +80,7 @@ class ManufacturerServiceTest {
 
     @Test
     public void getManufacturer_should_throw_an_exception_when_trying_to_fetch_a_non_existing_manufacturer() {
-        when(repository.findById(anyString())).thenReturn(Optional.empty());
+        when(dao.findById(anyString())).thenReturn(Optional.empty());
 
         assertThrows(ManufacturerNotFoundException.class,
                 () -> manufacturerService.getManufacturer(MANUFACTURER1_NAME));
@@ -88,10 +88,10 @@ class ManufacturerServiceTest {
 
     @Test
     public void updateManufacturer_should_update_an_existing_manufacturer_with_the_given_data() {
-        when(repository.existsById(anyString())).thenReturn(true);
+        when(dao.existsById(anyString())).thenReturn(true);
         manufacturerService.updateManufacturer(MANUFACTURER1_NAME, manufacturer1());
 
-        verify(repository).save(manufacturerCaptor.capture());
+        verify(dao).save(manufacturerCaptor.capture());
         assertThat(manufacturerCaptor.getValue().getName()).isEqualTo(MANUFACTURER1_NAME);
         assertThat(manufacturerCaptor.getValue().getNationality()).isEqualTo(MANUFACTURER1_NATIONALITY);
     }
@@ -99,7 +99,7 @@ class ManufacturerServiceTest {
     @Test
     public void updateManufacturer_should_throw_an_exception_when_asked_to_update_a_non_existing_manufacturer() {
         String manufacturer = "non existing manufacturer";
-        when(repository.existsById(anyString())).thenReturn(false);
+        when(dao.existsById(anyString())).thenReturn(false);
 
         assertThrows(ManufacturerNotFoundException.class,
                 () -> manufacturerService.updateManufacturer(manufacturer, new Manufacturer(manufacturer, "anywhere"))
@@ -115,16 +115,16 @@ class ManufacturerServiceTest {
 
     @Test
     public void deleteManufacturer_should_delete_an_existing_manufacturer() {
-        when(repository.existsById(anyString())).thenReturn(true);
+        when(dao.existsById(anyString())).thenReturn(true);
 
         manufacturerService.deleteManufacturer(MANUFACTURER1_NAME);
 
-        verify(repository).deleteById(MANUFACTURER1_NAME);
+        verify(dao).deleteById(MANUFACTURER1_NAME);
     }
 
     @Test
     public void deleteManufacturer_throw_exception_when_asked_to_delete_a_non_existing_manufacturer() {
-        when(repository.existsById(MANUFACTURER1_NAME)).thenReturn(false);
+        when(dao.existsById(MANUFACTURER1_NAME)).thenReturn(false);
 
         assertThrows(ManufacturerNotFoundException.class,
                 () -> manufacturerService.deleteManufacturer(MANUFACTURER1_NAME)

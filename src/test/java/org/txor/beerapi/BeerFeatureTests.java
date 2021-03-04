@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
@@ -41,6 +42,9 @@ class BeerFeatureTests {
     @Autowired
     private WebApplicationContext context;
 
+    @Autowired
+    private BeerDatabaseTestClient databaseTestClient;
+
     private MockMvc mockMvc;
 
     @BeforeEach
@@ -60,6 +64,7 @@ class BeerFeatureTests {
     }
 
     @Test
+    @Sql({"/delete_beer_data.sql", "/delete_manufacturer_data.sql", "/insert_manufacturer_data.sql"})
     public void create_beer() throws Exception {
         this.mockMvc.perform(post("/api/beer")
                 .content(beer1JsonString())
@@ -72,6 +77,7 @@ class BeerFeatureTests {
                                 fieldWithPath("type").description("The beer type"),
                                 fieldWithPath("description").description("The beer description"),
                                 fieldWithPath("manufacturer").description("The beer manufacturer name"))));
+        assertTrue(databaseTestClient.existsById(BEER1_NAME));
     }
 
     @Test
