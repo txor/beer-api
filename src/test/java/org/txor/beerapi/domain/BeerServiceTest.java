@@ -16,6 +16,7 @@ import org.txor.beerapi.repository.BeerDatabaseRepository;
 import org.txor.beerapi.repository.converters.BeerEntityConverter;
 import org.txor.beerapi.repository.entity.BeerEntity;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +36,6 @@ import static org.txor.beerapi.testutils.TestMother.BEER4_NAME;
 import static org.txor.beerapi.testutils.TestMother.BEER5_NAME;
 import static org.txor.beerapi.testutils.TestMother.MANUFACTURER1_NAME;
 import static org.txor.beerapi.testutils.TestMother.allBeerEntities;
-import static org.txor.beerapi.testutils.TestMother.allBeerNames;
 import static org.txor.beerapi.testutils.TestMother.beer1;
 import static org.txor.beerapi.testutils.TestMother.beer1Entity;
 
@@ -54,14 +54,14 @@ class BeerServiceTest {
     public void setUp() {
         BeerEntityConverter converter = new BeerEntityConverter();
         BeerRepository beerRepository = new BeerDatabaseRepository(dao, converter);
-        beerService = new BeerService(beerRepository);
+        beerService = new BeerService(beerRepository, null);
     }
 
     @Test
     public void getAllBeerNames_should_obtain_all_beer_names() {
         when(dao.findAll(any(org.springframework.data.domain.Sort.class))).thenReturn(allBeerEntities());
 
-        List<String> names = beerService.getAllBeerNames(new Sort("name", "asc"));
+        List<String> names = beerService.getAllBeerNames(new Sort("name", "asc"), Collections.emptyList());
 
         assertThat(names.size()).isEqualTo(5);
         assertThat(names.get(0)).isEqualTo(BEER1_NAME);

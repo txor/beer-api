@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface BeerRepository {
 
-    List<String> getAllBeerNames(Sort sort);
+    List<Beer> getAllBeers(Sort sort);
 
     void saveBeer(Beer beer);
 

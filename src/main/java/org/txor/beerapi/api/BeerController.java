@@ -14,9 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.txor.beerapi.api.converters.BeerConverter;
 import org.txor.beerapi.api.dto.BeerDTO;
 import org.txor.beerapi.domain.BeerService;
+import org.txor.beerapi.domain.filter.Filter;
+import org.txor.beerapi.domain.filter.ManufacturerFilter;
+import org.txor.beerapi.domain.filter.NameFilter;
+import org.txor.beerapi.domain.filter.NationalityFilter;
+import org.txor.beerapi.domain.filter.TypeFilter;
 import org.txor.beerapi.domain.model.Sort;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -31,9 +37,26 @@ public class BeerController {
     @GetMapping("/api/beers")
     public List<String> getAllBeers(
             @RequestParam(defaultValue = "name") String sort,
-            @RequestParam(defaultValue = "asc") String order
+            @RequestParam(defaultValue = "asc") String order,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String type,
+            @RequestParam(required = false) String manufacturer,
+            @RequestParam(required = false) String nationality
     ) {
-        return beerService.getAllBeerNames(new Sort(sort, order));
+        List<Filter> filters = new ArrayList<>(4);
+        if (name != null) {
+            filters.add(new NameFilter(name));
+        }
+        if (type != null) {
+            filters.add(new TypeFilter(type));
+        }
+        if (manufacturer != null) {
+            filters.add(new ManufacturerFilter(manufacturer));
+        }
+        if (nationality != null) {
+            filters.add(new NationalityFilter(nationality));
+        }
+        return beerService.getAllBeerNames(new Sort(sort, order), filters);
     }
 
     @PostMapping("/api/beer")

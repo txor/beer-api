@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.txor.beerapi.api.converters.BeerConverter;
 import org.txor.beerapi.api.converters.ManufacturerConverter;
 import org.txor.beerapi.domain.BeerService;
+import org.txor.beerapi.domain.FilterService;
 import org.txor.beerapi.domain.ManufacturerService;
 import org.txor.beerapi.repository.BeerDatabaseRepository;
 import org.txor.beerapi.repository.ManufacturerDatabaseRepository;
@@ -20,8 +21,13 @@ public class BeerApiConfiguration {
     ManufacturerDatabaseRepository manufacturerDatabaseRepository;
 
     @Bean
-    public BeerService beerService() {
-        return new BeerService(beerDatabaseRepository);
+    public BeerService beerService(FilterService filterService) {
+        return new BeerService(beerDatabaseRepository, filterService);
+    }
+
+    @Bean
+    public FilterService filterService() {
+        return new FilterService(manufacturerDatabaseRepository);
     }
 
     @Bean

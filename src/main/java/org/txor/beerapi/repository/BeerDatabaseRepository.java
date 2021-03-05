@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import org.txor.beerapi.domain.BeerRepository;
 import org.txor.beerapi.domain.model.Beer;
 import org.txor.beerapi.repository.converters.BeerEntityConverter;
-import org.txor.beerapi.repository.entity.BeerEntity;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +22,7 @@ public class BeerDatabaseRepository implements BeerRepository {
     }
 
     @Override
-    public List<String> getAllBeerNames(org.txor.beerapi.domain.model.Sort sort) {
+    public List<Beer> getAllBeers(org.txor.beerapi.domain.model.Sort sort) {
         Sort sortBy;
         if ("desc".equalsIgnoreCase(sort.getOrder())) {
             sortBy = Sort.by(Sort.Direction.DESC, sort.getSort());
@@ -31,7 +30,7 @@ public class BeerDatabaseRepository implements BeerRepository {
             sortBy = Sort.by(Sort.Direction.ASC, sort.getSort());
         }
         return repository.findAll(sortBy).stream()
-                .map(BeerEntity::getName).collect(Collectors.toList());
+                .map(converter::convert).collect(Collectors.toList());
     }
 
     @Override
